@@ -7,23 +7,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DAL
 {
     [Table("Album")]
-    public class Album : IEntityTypeConfiguration<Album>
+    public class Album
     {
         [Key]
        public  int AlbumID { get; set; }
-        [ForeignKey("PiosenkaID")]
-        public int PiosenkaID { get; }
+        [ForeignKey("Artysta")]
+        public int ArtystaID { get; set; }
         public string Nazwa { get; set; }
-        public Piosenka? Piosenki { get; set; }
-        public ICollection<Artysta>? ArtysciCol { get; set; }
-        public  ICollection<AlbumNaCharcie>? AlbumNaCharcieCol { get; set; }
+        public virtual Artysta Artysta { get; set; }
+        public virtual ICollection<AlbumNaCharcie> AlbumNaCharcieCol { get; set; }
+        public virtual ICollection<Piosenka> piosenkiCol { get; set; }
+        public virtual ICollection<Artysta> artystaCol { get; set; }
 
-        public void Configure(EntityTypeBuilder<Album> builder)
-        {
-            builder
-         .HasOne(p => p.Piosenki)
-         .WithMany(c => c.AlbumCol)
-         .OnDelete(DeleteBehavior.Cascade);
-        }
     }
 }

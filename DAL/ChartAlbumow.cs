@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 namespace DAL
 {
     [Table("ChartAlbumow")]
-    public class ChartAlbumow : Chart
+    public class ChartAlbumow
     {
        
         [Key]
-        public int ChartAlbumowID { get; private set; }
+        public int ChartAlbumowID { get;set; }
         [ForeignKey("ChartID")]
-        int ChartID { get; set; }
-        ICollection<Album>? albumy { get; set; }
-       // public virtual Chart? chart { get; set; }
-        public ICollection<AlbumNaCharcie>? AlbumNaCharcieCol { get; set; }
+        public int ChartID { get; set; }
+        public ICollection<Album> albumy { get; set; }
+        public virtual Chart? chart { get; set; }
+        public virtual ICollection<AlbumNaCharcie> AlbumNaCharcieCol { get; set; }
     }
 }

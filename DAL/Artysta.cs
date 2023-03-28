@@ -11,24 +11,13 @@ using System.Threading.Tasks;
 namespace DAL
 {
     [Table("Artysta")]
-    public class Artysta : IEntityTypeConfiguration<Artysta>
+    public class Artysta
     {
         [Key]
-        public int ArtystaID { get; private set; }
-        [ForeignKey("AlbumID")]
-        public int AlbumID { get; set; }
-        public ICollection<Album>? Albumy { get; set; }
-        public Album? album { get; set; }
-        public Artysta? artysta { get; set; }
-        int SluchaczeWMiesiacu { get; set; }
-        string Pseudonim { get; set; }
-
-        public void Configure(EntityTypeBuilder<Artysta> builder)
-        {
-            builder
-                .HasOne(p => p.album)
-                .WithMany(c => c.ArtysciCol)
-                .OnDelete(DeleteBehavior.Cascade);
-        }
+        public int ArtystaID { get; set; }
+        //public virtual Album album { get; set; }
+        public virtual ICollection<Album> album { get; set; }
+        public int SluchaczeWMiesiacu { get; set; }
+        public string Pseudonim { get; set; }
     }
 }

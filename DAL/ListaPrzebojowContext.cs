@@ -23,59 +23,126 @@ namespace ListaPrzebojow.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ListaPrzebojowDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=MusicChart;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            //modelBuilder.Entity<PiosenkaNaCharcie>()
-            //    .HasRequired<Piosenka>(s => s.piosenka)
-            //    .WithMany(g => g.PiosenkaNaCharcieCol)
-            //    .HasForeignKey<int>(s => s.PiosenkaID);
 
-            //modelBuilder.Entity<PiosenkaNaCharcie>()
-            //    .HasRequired<ChartPiosenek>(s => s.chartPiosenek)
-            //    .WithMany(g => g.PiosenkaNaCharcieCol)
-            //    .HasForeignKey<int>(s => s.ChartPiosenekID);
+            modelBuilder.Entity<PiosenkaNaCharcie>().HasKey(ep => new { ep.PiosenkaID, ep.ChartPiosenekID });
+            modelBuilder.Entity<PiosenkaNaPlayliscie>().HasKey(ep => new { ep.PiosenkaID, ep.PlaylistaID });
+            modelBuilder.Entity<AlbumNaCharcie>().HasKey(ep => new { ep.AlbumID, ep.ChartAlbumowID });
 
-            //modelBuilder.Entity<AlbumNaCharcie>()
-            //    .HasRequired<Album>(s => s.album)
-            //    .WithMany(g => g.AlbumNaCharcieCol)
-            //    .HasForeignKey<int>(s => s.AlbumID);
+            modelBuilder.Entity<PiosenkaNaCharcie>()
+                .HasOne<Piosenka>(cr => cr.piosenka)
+                .WithMany(c => c.PiosenkaNaCharcieCol)
+                .HasForeignKey(cr => cr.PiosenkaID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
-            //modelBuilder.Entity<AlbumNaCharcie>()
-            //    .HasRequired<ChartAlbumow>(s => s.chartAlbumow)
-            //    .WithMany(g => g.AlbumNaCharcieCol)
-            //    .HasForeignKey<int>(s => s.ChartAlbumowID);
+            modelBuilder.Entity<PiosenkaNaCharcie>()
+                .HasOne<ChartPiosenek>(cr => cr.chartPiosenek)
+                .WithMany(r => r.PiosenkaNaCharcieCol)
+                .HasForeignKey(cr => cr.ChartPiosenekID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
-            //modelBuilder.Entity<Album>()
-            //    .HasRequired<Piosenka>(s => s.Piosenki)
-            //    .WithMany(g => g.AlbumCol)
-            //    .HasForeignKey<int>(s => s.PiosenkaID);
+            modelBuilder.Entity<PiosenkaNaPlayliscie>()
+                .HasOne<Piosenka>(cr => cr.piosenka)
+                .WithMany(c => c.PiosenkaNaPlayliscieCol)
+                .HasForeignKey(cr => cr.PiosenkaID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
-            //modelBuilder.Entity<Artysta>()
-            //    .HasRequired<Album>(s => s.album)
-            //    .WithMany(g => g.ArtysciCol)
-            //    .HasForeignKey<int>(s => s.AlbumID);
+            modelBuilder.Entity<PiosenkaNaPlayliscie>()
+                .HasOne<Playlista>(cr => cr.playlista)
+                .WithMany(r => r.PiosenkaNaPlayliscieCol)
+                .HasForeignKey(cr => cr.PlaylistaID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
-            //modelBuilder.Entity<PiosenkaNaPlayliscie>()
-            //    .HasRequired<Piosenka>(s => s.piosenka)
-            //    .WithMany(g => g.PiosenkaNaPlayliscieCol)
-            //    .HasForeignKey<int>(s => s.PiosenkaID);
+            modelBuilder.Entity<AlbumNaCharcie>()
+                .HasOne<Album>(cr => cr.album)
+                .WithMany(c => c.AlbumNaCharcieCol)
+                .HasForeignKey(cr => cr.AlbumID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
-            //modelBuilder.Entity<PiosenkaNaPlayliscie>()
-            //    .HasRequired<Playlista>(s => s.playlista)
-            //    .WithMany(g => g.PiosenkaNaPlayliscieCol)
-            //    .HasForeignKey<int>(s => s.PlaylistaID);
+            modelBuilder.Entity<AlbumNaCharcie>()
+                .HasOne<ChartAlbumow>(cr => cr.chartAlbumow)
+                .WithMany(r => r.AlbumNaCharcieCol)
+                .HasForeignKey(cr => cr.ChartAlbumowID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
-            //modelBuilder.Entity<Chart>()
-            //   .HasOptional(s => s.chartPiosenek)
-            //   .WithRequired(ad => ad.chart);
+            modelBuilder.Entity<Album>()
+                .HasOne(r => r.Artysta)
+                .WithMany(u => u.album)
+                .HasForeignKey(r => r.ArtystaID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
-            //modelBuilder.Entity<Chart>()
-            //   .HasOptional(s => s.chartAlbumow)
-            //   .WithRequired(ad => ad.chart);
+            modelBuilder.Entity<Chart>()
+                .HasOne(c => c.chartPiosenek)
+                .WithOne(r => r.chart)
+                .HasForeignKey<ChartPiosenek>(b => b.ChartPiosenekID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Chart>()
+                .HasOne(c => c.chartAlbumow)
+                .WithOne(r => r.chart)
+                .HasForeignKey<ChartAlbumow>(b => b.ChartAlbumowID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Piosenka>()
+                .HasOne(r => r.Album)
+                .WithMany(u => u.piosenkiCol)
+                .HasForeignKey(r => r.PiosenkaID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Album>()
+                .HasData(
+                    new Album { AlbumID = 1, ArtystaID = 1, Nazwa = "Album 1" },
+                    new Album { AlbumID = 2, ArtystaID = 1, Nazwa = "Album 2" },
+                    new Album { AlbumID = 3, ArtystaID = 2, Nazwa = "Album 3" }
+                );
+
+            modelBuilder.Entity<Artysta>()
+                .HasData(
+                    new Artysta { ArtystaID = 1, SluchaczeWMiesiacu = 1000, Pseudonim = "Artysta 1" },
+                    new Artysta { ArtystaID = 2, SluchaczeWMiesiacu = 500, Pseudonim = "Artysta 2" }
+                );
+            modelBuilder.Entity<Chart>()
+                .HasData(
+                    new Chart { ChartID = 1 }
+                );
+
+            modelBuilder.Entity<ChartAlbumow>()
+                .HasData(
+                    new ChartAlbumow { ChartAlbumowID = 1, ChartID = 1 }
+                );
+
+            modelBuilder.Entity<ChartPiosenek>()
+                .HasData(
+                    new ChartPiosenek { ChartPiosenekID = 1, ChartID = 1 }
+                );
+
+            modelBuilder.Entity<Piosenka>()
+                .HasData(
+                    new Piosenka { PiosenkaID = 1, ArtystaID = 1, AlbumID = 1, Nazwa = "Piosenka 1", Gatunek = "Rock" },
+                    new Piosenka { PiosenkaID = 2, ArtystaID = 1, AlbumID = 1, Nazwa = "Piosenka 2", Gatunek = "Rock" },
+                    new Piosenka { PiosenkaID = 3, ArtystaID = 2, AlbumID = 3, Nazwa = "Piosenka 3", Gatunek = "Pop" }
+                );
+
+            modelBuilder.Entity<Playlista>()
+                .HasData(
+                    new Playlista { PlaylistaID = 1, Gatunek = "Rock" }
+                );
+
         }
     }
 }

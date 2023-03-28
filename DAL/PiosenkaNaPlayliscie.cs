@@ -7,27 +7,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ListaPrzebojow.DAL
 {
     [Table("PiosenkaNaPlayliscie")]
-    public class PiosenkaNaPlayliscie : IEntityTypeConfiguration<PiosenkaNaPlayliscie>
+    public class PiosenkaNaPlayliscie
     {
-        [Key]
-        public int PiosenkaNaPlayliscieID { get; set; }
-        [ForeignKey("PiosenkaID")]
+        [ForeignKey("Piosenka")]
         public int PiosenkaID { get; set; }
-        [ForeignKey("PlaylistaID")]
+        [ForeignKey("Playlista")]
         public int PlaylistaID { get; set; }
-        public Piosenka? piosenka { get; set; }
-        public Playlista? playlista { get; set; }
-
-        public void Configure(EntityTypeBuilder<PiosenkaNaPlayliscie> builder)
-        {
-            builder
-                .HasOne(p => p.piosenka)
-                .WithMany(c => c.PiosenkaNaPlayliscieCol)
-                .OnDelete(DeleteBehavior.Cascade);
-            builder
-                .HasOne(p => p.playlista)
-                .WithMany(c => c.PiosenkaNaPlayliscieCol)
-                .OnDelete(DeleteBehavior.Cascade);
-        }
+        public Piosenka piosenka { get; set; }
+        public Playlista playlista { get; set; }
     }
 }

@@ -13,10 +13,9 @@ namespace DAL
     public class Playlista
     {
         [Key]
-        public int PlaylistaID { get; private set; }
-        [Required]
-        ICollection<Piosenka>? piosenkaList { get; set; }
-        public ICollection<PiosenkaNaPlayliscie>? PiosenkaNaPlayliscieCol { get; set; }
-        string Gatunek { get; set; }
+        public int PlaylistaID { get; set; }
+        public ICollection<Piosenka> piosenkaCol { get; set; }
+        public ICollection<PiosenkaNaPlayliscie> PiosenkaNaPlayliscieCol { get; set; }
+        public string Gatunek { get; set; }
     }
 }

@@ -12,12 +12,12 @@ namespace DAL
     public class ChartPiosenek
     {
         [Key]
-        public int ChartPiosenekID { get; private set; }
-        ICollection<Piosenka>? piosenki { get; set; }
-        public ICollection<PiosenkaNaCharcie>? PiosenkaNaCharcieCol { get; set; }
+        public int ChartPiosenekID { get; set; }
+        public ICollection<Piosenka> piosenki { get; set; }
+        public virtual ICollection<PiosenkaNaCharcie> PiosenkaNaCharcieCol { get; set; }
         [ForeignKey("ChartID")]
-        int ChartID { get; }
-        public virtual Chart? chart { get; set; }
+        public int ChartID { get; set; }
+        public virtual Chart chart { get; set; }
 
 
     }

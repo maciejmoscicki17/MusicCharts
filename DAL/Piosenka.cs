@@ -11,15 +11,18 @@ namespace DAL
     {
         [Key]
         public int PiosenkaID { get; set; }
-        int IleOdsluchan { get; set; }
-        [Required]
-        Artysta? Artysta { get; set; }
-        Album? Album { get; set; }
-        string Nazwa { get; set; }
-        string Gatunek { get; set; }
-        public ICollection<PiosenkaNaCharcie>? PiosenkaNaCharcieCol { get; set; }
-        public ICollection<PiosenkaNaPlayliscie>? PiosenkaNaPlayliscieCol { get; set; }
-        public ICollection<Album>?   AlbumCol { get; set; }
+        [ForeignKey("Album")]
+        public int AlbumID { get; set; }
+        [ForeignKey("Artysta")]
+        public int ArtystaID { get; set; }
+        public int IleOdsluchan { get; set; }
+        public Artysta Artysta { get; set; }
+        public Album Album { get; set; }
+        public string Nazwa { get; set; }
+        public string Gatunek { get; set; }
+        public virtual ICollection<PiosenkaNaCharcie> PiosenkaNaCharcieCol { get; set; }
+        public virtual ICollection<PiosenkaNaPlayliscie> PiosenkaNaPlayliscieCol { get; set; }
+        public ICollection<Album>   AlbumCol { get; set; }
 
     }
 }

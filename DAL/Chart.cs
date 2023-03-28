@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    //[Table("Chart")]
+    [Table("Chart")]
     public class Chart
     {
         [Key]
         public int ChartID { get; set; }
         [ForeignKey("ChartAlbumowID")]
         public int ChartAlbumowID { get; private set; }
-        //public virtual ChartPiosenek? chartPiosenek { get; set; }
-        //public virtual ChartAlbumow? chartAlbumow { get; set; }  
+        public virtual ChartPiosenek chartPiosenek { get; set; }
+        public virtual ChartAlbumow chartAlbumow { get; set; }  
     }
 }
