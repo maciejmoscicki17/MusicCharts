@@ -5,14 +5,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL
 {
+    [Table("PiosenkaNaCharcie")]
     public class PiosenkaNaCharcie : IEntityTypeConfiguration<PiosenkaNaCharcie>
     {
         [ForeignKey("PiosenkaID")]
-       public int PiosenkaID { get; }
+       public int PiosenkaID { get; set; }
         [ForeignKey("ChartPiosenekID")]
         public int ChartPiosenekID { get; set; }
         [Key]
-        int ChartID { get; }
+        public int ChartID { get; set; }
         int PozycjaPiosenki { get; set; }
         public Piosenka? piosenka { get; set; }
         public ChartPiosenek? chartPiosenek { get; set; }

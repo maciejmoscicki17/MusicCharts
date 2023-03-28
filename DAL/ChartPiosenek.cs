@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
+    [Table("ChartPiosenek")]
     public class ChartPiosenek
     {
         [Key]

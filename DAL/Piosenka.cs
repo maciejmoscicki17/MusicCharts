@@ -6,10 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL
 {
+    [Table("Piosenka")]
     public class Piosenka
     {
         [Key]
-        public int PiosenkaID { get; }
+        public int PiosenkaID { get; set; }
         int IleOdsluchan { get; set; }
         [Required]
         Artysta? Artysta { get; set; }

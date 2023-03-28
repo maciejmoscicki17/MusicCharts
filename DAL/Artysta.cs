@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
+    [Table("Artysta")]
     public class Artysta : IEntityTypeConfiguration<Artysta>
     {
         [Key]

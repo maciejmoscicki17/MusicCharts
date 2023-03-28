@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ListaPrzebojow.DAL
 {
+    [Table("AlbumNaCharcie")]
     public class AlbumNaCharcie : IEntityTypeConfiguration<AlbumNaCharcie>
     {
         [Key]

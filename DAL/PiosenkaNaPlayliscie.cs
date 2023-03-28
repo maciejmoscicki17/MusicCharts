@@ -6,12 +6,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ListaPrzebojow.DAL
 {
+    [Table("PiosenkaNaPlayliscie")]
     public class PiosenkaNaPlayliscie : IEntityTypeConfiguration<PiosenkaNaPlayliscie>
     {
         [Key]
-        int PiosenkaNaPlayliscieID { get; set; }
+        public int PiosenkaNaPlayliscieID { get; set; }
         [ForeignKey("PiosenkaID")]
-        public int PiosenkaID { get; }
+        public int PiosenkaID { get; set; }
         [ForeignKey("PlaylistaID")]
         public int PlaylistaID { get; set; }
         public Piosenka? piosenka { get; set; }
