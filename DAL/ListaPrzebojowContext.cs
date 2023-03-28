@@ -1,20 +1,24 @@
 ﻿using DAL;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
+using System;
 using System.Reflection;
 
 namespace ListaPrzebojow.DAL
 {
     public class ListaPrzebojowContext : DbContext
     {
-        public DbSet<Piosenka> piosenkaDb { get; set; }
-        public DbSet<PiosenkaNaCharcie> piosenkaNaCharcieDb { get; set; }
-        public DbSet<ChartPiosenek> chartPiosenekDb { get; set; }
-        public DbSet<PiosenkaNaPlayliscie> piosenkaNaPlayliscieDb { get; set; }
-        public DbSet<Playlista> playlistaDb { get; set; }
-        public DbSet<Artysta> artystaDb { get; set; }
-        public DbSet<Album> albumDb { get; set; }
-        public DbSet<AlbumNaCharcie> albumNaCharcieDb { get; set; }
-        public DbSet<ChartAlbumow> chartAlbumowDb { get; set; }
+        public virtual DbSet<Piosenka> piosenkaDb { get; set; }
+        public virtual DbSet<PiosenkaNaCharcie> piosenkaNaCharcieDb { get; set; }
+        public virtual DbSet<ChartPiosenek> chartPiosenekDb { get; set; }
+        public virtual DbSet<PiosenkaNaPlayliscie> piosenkaNaPlayliscieDb { get; set; }
+        public virtual DbSet<Playlista> playlistaDb { get; set; }
+        public virtual DbSet<Chart> chartDb { get; set; }
+        public virtual DbSet<Artysta> artystaDb { get; set; }
+        public virtual DbSet<Album> albumDb { get; set; }
+        public virtual DbSet<AlbumNaCharcie> albumNaCharcieDb { get; set; }
+        public virtual DbSet<ChartAlbumow> chartAlbumowDb { get; set; }
 
         public ListaPrzebojowContext() : base()
         {
@@ -23,7 +27,7 @@ namespace ListaPrzebojow.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=MusicChart;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            optionsBuilder.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = master; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
