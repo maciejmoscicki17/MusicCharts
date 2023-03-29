@@ -19,6 +19,8 @@ namespace ListaPrzebojow.DAL
         public virtual DbSet<Album> albumDb { get; set; }
         public virtual DbSet<AlbumNaCharcie> albumNaCharcieDb { get; set; }
         public virtual DbSet<ChartAlbumow> chartAlbumowDb { get; set; }
+        public  DbSet<ArtystaAlbum> artystaAlbumDb { get; set; }
+        public  DbSet<PiosenkaArtysta> piosenkaArtystaDb { get; set; }
 
         public ListaPrzebojowContext() : base()
         {
@@ -27,7 +29,7 @@ namespace ListaPrzebojow.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = master; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False");
+            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=MCDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,6 +39,8 @@ namespace ListaPrzebojow.DAL
             modelBuilder.Entity<PiosenkaNaCharcie>().HasKey(ep => new { ep.PiosenkaID, ep.ChartPiosenekID });
             modelBuilder.Entity<PiosenkaNaPlayliscie>().HasKey(ep => new { ep.PiosenkaID, ep.PlaylistaID });
             modelBuilder.Entity<AlbumNaCharcie>().HasKey(ep => new { ep.AlbumID, ep.ChartAlbumowID });
+            modelBuilder.Entity<PiosenkaArtysta>().HasKey(ep => new { ep.PiosenkaID, ep.ArtystaID });
+            modelBuilder.Entity<ArtystaAlbum>().HasKey(ep => new { ep.AlbumID, ep.ArtystaID });
 
             modelBuilder.Entity<PiosenkaNaCharcie>()
                 .HasOne<Piosenka>(cr => cr.piosenka)
@@ -80,10 +84,33 @@ namespace ListaPrzebojow.DAL
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Album>()
-                .HasOne(r => r.Artysta)
-                .WithMany(u => u.album)
-                .HasForeignKey(r => r.ArtystaID)
+            //wiele do wielu artysta album
+            modelBuilder.Entity<ArtystaAlbum>()
+                .HasOne<Album>(cr => cr.album)
+                .WithMany(c => c.artystaAlbumCol)
+                .HasForeignKey(cr => cr.AlbumID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ArtystaAlbum>()
+                .HasOne<Artysta>(cr => cr.artysta)
+                .WithMany(c => c.artystaAlbumCol)
+                .HasForeignKey(cr => cr.ArtystaID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            //wiele do wielu artysta piosenka
+            modelBuilder.Entity<PiosenkaArtysta>()
+                .HasOne<Artysta>(cr => cr.artysta)
+                .WithMany(c => c.piosenkaArtystaCol)
+                .HasForeignKey(cr => cr.ArtystaID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PiosenkaArtysta>()
+                .HasOne<Piosenka>(cr => cr.piosenka)
+                .WithMany(c => c.piosenkaArtystaCol)
+                .HasForeignKey(cr => cr.PiosenkaID)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -101,51 +128,60 @@ namespace ListaPrzebojow.DAL
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Piosenka>()
-                .HasOne(r => r.Album)
-                .WithMany(u => u.piosenkiCol)
-                .HasForeignKey(r => r.PiosenkaID)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Album>()
-                .HasData(
-                    new Album { AlbumID = 1, ArtystaID = 1, Nazwa = "Album 1" },
-                    new Album { AlbumID = 2, ArtystaID = 1, Nazwa = "Album 2" },
-                    new Album { AlbumID = 3, ArtystaID = 2, Nazwa = "Album 3" }
-                );
+            modelBuilder.Entity<Piosenka>().HasData(
+                new Piosenka { PiosenkaID = 1, IleOdsluchan = 100, Nazwa = "Piosenka 1", Gatunek = "Rock" },
+                new Piosenka { PiosenkaID = 2, IleOdsluchan = 50, Nazwa = "Piosenka 2", Gatunek = "Pop" }
+);
 
-            modelBuilder.Entity<Artysta>()
-                .HasData(
-                    new Artysta { ArtystaID = 1, SluchaczeWMiesiacu = 1000, Pseudonim = "Artysta 1" },
-                    new Artysta { ArtystaID = 2, SluchaczeWMiesiacu = 500, Pseudonim = "Artysta 2" }
-                );
-            modelBuilder.Entity<Chart>()
-                .HasData(
-                    new Chart { ChartID = 1 }
-                );
+            modelBuilder.Entity<Artysta>().HasData(
+                new Artysta { ArtystaID = 1, SluchaczeWMiesiacu = 1000, Pseudonim = "Artysta 1" },
+                new Artysta { ArtystaID = 2, SluchaczeWMiesiacu = 500, Pseudonim = "Artysta 2" }
+            );
 
-            modelBuilder.Entity<ChartAlbumow>()
-                .HasData(
-                    new ChartAlbumow { ChartAlbumowID = 1, ChartID = 1 }
-                );
+            modelBuilder.Entity<PiosenkaArtysta>().HasData(
+                new PiosenkaArtysta { PiosenkaID = 1, ArtystaID = 1 },
+                new PiosenkaArtysta { PiosenkaID = 2, ArtystaID = 2 }
+            );
 
-            modelBuilder.Entity<ChartPiosenek>()
-                .HasData(
-                    new ChartPiosenek { ChartPiosenekID = 1, ChartID = 1 }
-                );
+            //modelBuilder.Entity<Album>()
+            //    .HasData(
+            //        new Album { AlbumID = 1, ArtystaID = 1, Nazwa = "2014 Forest Hills Drive" },
+            //        new Album { AlbumID = 2, ArtystaID = 1, Nazwa = "Album 2" },
+            //        new Album { AlbumID = 3, ArtystaID = 2, Nazwa = "Album 3" }
+            //    );
 
-            modelBuilder.Entity<Piosenka>()
-                .HasData(
-                    new Piosenka { PiosenkaID = 1, ArtystaID = 1, AlbumID = 1, Nazwa = "Piosenka 1", Gatunek = "Rock" },
-                    new Piosenka { PiosenkaID = 2, ArtystaID = 1, AlbumID = 1, Nazwa = "Piosenka 2", Gatunek = "Rock" },
-                    new Piosenka { PiosenkaID = 3, ArtystaID = 2, AlbumID = 3, Nazwa = "Piosenka 3", Gatunek = "Pop" }
-                );
+            //modelBuilder.Entity<Artysta>()
+            //    .HasData(
+            //        new Artysta { ArtystaID = 1, SluchaczeWMiesiacu = 1000, Pseudonim = "J.Cole" },
+            //        new Artysta { ArtystaID = 2, SluchaczeWMiesiacu = 500, Pseudonim = "Artysta 2" }
+            //    );
+            //modelBuilder.Entity<Chart>()
+            //    .HasData(
+            //        new Chart { ChartID = 1 }
+            //    );
 
-            modelBuilder.Entity<Playlista>()
-                .HasData(
-                    new Playlista { PlaylistaID = 1, Gatunek = "Rock" }
-                );
+            //modelBuilder.Entity<ChartAlbumow>()
+            //    .HasData(
+            //        new ChartAlbumow { ChartAlbumowID = 1, ChartID = 1 }
+            //    );
+
+            //modelBuilder.Entity<ChartPiosenek>()
+            //    .HasData(
+            //        new ChartPiosenek { ChartPiosenekID = 1, ChartID = 1 }
+            //    );
+
+            //modelBuilder.Entity<Piosenka>()
+            //    .HasData(
+            //        new Piosenka { PiosenkaID = 1, ArtystaID = 1, AlbumID = 1, Nazwa = "No Role Modelz", Gatunek = "Rap", IleOdsluchan=20044 },
+            //        new Piosenka { PiosenkaID = 2, ArtystaID = 1, AlbumID = 1, Nazwa = "Piosenka 2", Gatunek = "Rock", IleOdsluchan = 300 },
+            //        new Piosenka { PiosenkaID = 3, ArtystaID = 2, AlbumID = 3, Nazwa = "Piosenka 3", Gatunek = "Pop", IleOdsluchan = 4000 }
+            //    );
+
+            //modelBuilder.Entity<Playlista>()
+            //    .HasData(
+            //        new Playlista { PlaylistaID = 1, Gatunek = "Rock" }
+            //    );
 
         }
     }

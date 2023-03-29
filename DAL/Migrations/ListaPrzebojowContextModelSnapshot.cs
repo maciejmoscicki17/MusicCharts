@@ -30,9 +30,6 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AlbumID"));
 
-                    b.Property<int>("ArtystaID")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ChartAlbumowID")
                         .HasColumnType("int");
 
@@ -45,33 +42,11 @@ namespace DAL.Migrations
 
                     b.HasKey("AlbumID");
 
-                    b.HasIndex("ArtystaID");
-
                     b.HasIndex("ChartAlbumowID");
 
                     b.HasIndex("PiosenkaID");
 
                     b.ToTable("Album");
-
-                    b.HasData(
-                        new
-                        {
-                            AlbumID = 1,
-                            ArtystaID = 1,
-                            Nazwa = "Album 1"
-                        },
-                        new
-                        {
-                            AlbumID = 2,
-                            ArtystaID = 1,
-                            Nazwa = "Album 2"
-                        },
-                        new
-                        {
-                            AlbumID = 3,
-                            ArtystaID = 2,
-                            Nazwa = "Album 3"
-                        });
                 });
 
             modelBuilder.Entity("DAL.Artysta", b =>
@@ -82,9 +57,6 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArtystaID"));
 
-                    b.Property<int?>("AlbumID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Pseudonim")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -93,8 +65,6 @@ namespace DAL.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ArtystaID");
-
-                    b.HasIndex("AlbumID");
 
                     b.ToTable("Artysta");
 
@@ -113,6 +83,21 @@ namespace DAL.Migrations
                         });
                 });
 
+            modelBuilder.Entity("DAL.ArtystaAlbum", b =>
+                {
+                    b.Property<int>("AlbumID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ArtystaID")
+                        .HasColumnType("int");
+
+                    b.HasKey("AlbumID", "ArtystaID");
+
+                    b.HasIndex("ArtystaID");
+
+                    b.ToTable("ArtystaAlbum");
+                });
+
             modelBuilder.Entity("DAL.Chart", b =>
                 {
                     b.Property<int>("ChartID")
@@ -127,13 +112,6 @@ namespace DAL.Migrations
                     b.HasKey("ChartID");
 
                     b.ToTable("Chart");
-
-                    b.HasData(
-                        new
-                        {
-                            ChartID = 1,
-                            ChartAlbumowID = 0
-                        });
                 });
 
             modelBuilder.Entity("DAL.ChartAlbumow", b =>
@@ -147,13 +125,6 @@ namespace DAL.Migrations
                     b.HasKey("ChartAlbumowID");
 
                     b.ToTable("ChartAlbumow");
-
-                    b.HasData(
-                        new
-                        {
-                            ChartAlbumowID = 1,
-                            ChartID = 1
-                        });
                 });
 
             modelBuilder.Entity("DAL.ChartPiosenek", b =>
@@ -167,25 +138,15 @@ namespace DAL.Migrations
                     b.HasKey("ChartPiosenekID");
 
                     b.ToTable("ChartPiosenek");
-
-                    b.HasData(
-                        new
-                        {
-                            ChartPiosenekID = 1,
-                            ChartID = 1
-                        });
                 });
 
             modelBuilder.Entity("DAL.Piosenka", b =>
                 {
                     b.Property<int>("PiosenkaID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AlbumID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ArtystaID")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PiosenkaID"));
 
                     b.Property<int?>("ChartPiosenekID")
                         .HasColumnType("int");
@@ -206,8 +167,6 @@ namespace DAL.Migrations
 
                     b.HasKey("PiosenkaID");
 
-                    b.HasIndex("ArtystaID");
-
                     b.HasIndex("ChartPiosenekID");
 
                     b.HasIndex("PlaylistaID");
@@ -218,29 +177,43 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 1,
-                            AlbumID = 1,
-                            ArtystaID = 1,
                             Gatunek = "Rock",
-                            IleOdsluchan = 0,
+                            IleOdsluchan = 100,
                             Nazwa = "Piosenka 1"
                         },
                         new
                         {
                             PiosenkaID = 2,
-                            AlbumID = 1,
-                            ArtystaID = 1,
-                            Gatunek = "Rock",
-                            IleOdsluchan = 0,
+                            Gatunek = "Pop",
+                            IleOdsluchan = 50,
                             Nazwa = "Piosenka 2"
+                        });
+                });
+
+            modelBuilder.Entity("DAL.PiosenkaArtysta", b =>
+                {
+                    b.Property<int>("PiosenkaID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ArtystaID")
+                        .HasColumnType("int");
+
+                    b.HasKey("PiosenkaID", "ArtystaID");
+
+                    b.HasIndex("ArtystaID");
+
+                    b.ToTable("PiosenkaArtysta");
+
+                    b.HasData(
+                        new
+                        {
+                            PiosenkaID = 1,
+                            ArtystaID = 1
                         },
                         new
                         {
-                            PiosenkaID = 3,
-                            AlbumID = 3,
-                            ArtystaID = 2,
-                            Gatunek = "Pop",
-                            IleOdsluchan = 0,
-                            Nazwa = "Piosenka 3"
+                            PiosenkaID = 2,
+                            ArtystaID = 2
                         });
                 });
 
@@ -277,13 +250,6 @@ namespace DAL.Migrations
                     b.HasKey("PlaylistaID");
 
                     b.ToTable("Playlista");
-
-                    b.HasData(
-                        new
-                        {
-                            PlaylistaID = 1,
-                            Gatunek = "Rock"
-                        });
                 });
 
             modelBuilder.Entity("ListaPrzebojow.DAL.AlbumNaCharcie", b =>
@@ -318,12 +284,6 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Album", b =>
                 {
-                    b.HasOne("DAL.Artysta", "Artysta")
-                        .WithMany("album")
-                        .HasForeignKey("ArtystaID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("DAL.ChartAlbumow", null)
                         .WithMany("albumy")
                         .HasForeignKey("ChartAlbumowID");
@@ -331,15 +291,25 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Piosenka", null)
                         .WithMany("AlbumCol")
                         .HasForeignKey("PiosenkaID");
-
-                    b.Navigation("Artysta");
                 });
 
-            modelBuilder.Entity("DAL.Artysta", b =>
+            modelBuilder.Entity("DAL.ArtystaAlbum", b =>
                 {
-                    b.HasOne("DAL.Album", null)
-                        .WithMany("artystaCol")
-                        .HasForeignKey("AlbumID");
+                    b.HasOne("DAL.Album", "album")
+                        .WithMany("artystaAlbumCol")
+                        .HasForeignKey("AlbumID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Artysta", "artysta")
+                        .WithMany("artystaAlbumCol")
+                        .HasForeignKey("ArtystaID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("album");
+
+                    b.Navigation("artysta");
                 });
 
             modelBuilder.Entity("DAL.ChartAlbumow", b =>
@@ -366,29 +336,32 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Piosenka", b =>
                 {
-                    b.HasOne("DAL.Artysta", "Artysta")
-                        .WithMany()
-                        .HasForeignKey("ArtystaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("DAL.ChartPiosenek", null)
                         .WithMany("piosenki")
                         .HasForeignKey("ChartPiosenekID");
 
-                    b.HasOne("DAL.Album", "Album")
-                        .WithMany("piosenkiCol")
+                    b.HasOne("DAL.Playlista", null)
+                        .WithMany("piosenkaCol")
+                        .HasForeignKey("PlaylistaID");
+                });
+
+            modelBuilder.Entity("DAL.PiosenkaArtysta", b =>
+                {
+                    b.HasOne("DAL.Artysta", "artysta")
+                        .WithMany("piosenkaArtystaCol")
+                        .HasForeignKey("ArtystaID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Piosenka", "piosenka")
+                        .WithMany("piosenkaArtystaCol")
                         .HasForeignKey("PiosenkaID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("DAL.Playlista", null)
-                        .WithMany("piosenkaCol")
-                        .HasForeignKey("PlaylistaID");
+                    b.Navigation("artysta");
 
-                    b.Navigation("Album");
-
-                    b.Navigation("Artysta");
+                    b.Navigation("piosenka");
                 });
 
             modelBuilder.Entity("DAL.PiosenkaNaCharcie", b =>
@@ -452,14 +425,14 @@ namespace DAL.Migrations
                 {
                     b.Navigation("AlbumNaCharcieCol");
 
-                    b.Navigation("artystaCol");
-
-                    b.Navigation("piosenkiCol");
+                    b.Navigation("artystaAlbumCol");
                 });
 
             modelBuilder.Entity("DAL.Artysta", b =>
                 {
-                    b.Navigation("album");
+                    b.Navigation("artystaAlbumCol");
+
+                    b.Navigation("piosenkaArtystaCol");
                 });
 
             modelBuilder.Entity("DAL.Chart", b =>
@@ -492,6 +465,8 @@ namespace DAL.Migrations
                     b.Navigation("PiosenkaNaCharcieCol");
 
                     b.Navigation("PiosenkaNaPlayliscieCol");
+
+                    b.Navigation("piosenkaArtystaCol");
                 });
 
             modelBuilder.Entity("DAL.Playlista", b =>
