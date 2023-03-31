@@ -16,8 +16,8 @@ namespace DAL
         [Key]
         public int ArtystaID { get; set; }
         //public virtual Album album { get; set; }
-        public virtual ICollection<ArtystaAlbum> artystaAlbumCol { get; set; }
-        public virtual ICollection<PiosenkaArtysta> piosenkaArtystaCol { get; set; }
+        public virtual ICollection<ArtystaAlbum>? artystaAlbumCol { get; set; }
+        public virtual ICollection<PiosenkaArtysta>? piosenkaArtystaCol { get; set; }
         public int SluchaczeWMiesiacu { get; set; }
         public string Pseudonim { get; set; }
     }
