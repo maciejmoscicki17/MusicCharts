@@ -24,6 +24,11 @@
                 <span asp-validation-for="Nazwa" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="AlbumID" class="control-label">Albumy</label>
+                <select asp-for="AlbumID" asp-items="@(new SelectList(ViewBag.Albums, "Value", "Text"))" class="form-control"></select>
+                <span asp-validation-for="AlbumID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Gatunek" class="control-label"></label>
                 <input asp-for="Gatunek" class="form-control" />
                 <span asp-validation-for="Gatunek" class="text-danger"></span>

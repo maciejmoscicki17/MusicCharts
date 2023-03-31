@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using ListaPrzebojow.DAL;
+using WebListaPrzebojow.Utils;
 
 namespace WebListaPrzebojow.Controllers
 {
@@ -17,6 +18,7 @@ namespace WebListaPrzebojow.Controllers
         public PiosenkaController(ListaPrzebojowContext context)
         {
             _context = context;
+            GlobalFunctions.Init(_context);
         }
 
         // GET: Piosenka
@@ -48,6 +50,14 @@ namespace WebListaPrzebojow.Controllers
         // GET: Piosenka/Create
         public IActionResult Create()
         {
+            List<SelectListItem> albums = _context.albumDb
+        .Select(a => new SelectListItem
+        {
+            Value = a.AlbumID.ToString(),
+            Text = a.Nazwa
+        })
+        .ToList();
+            ViewBag.Albums = albums;
             return View();
         }
 
@@ -56,8 +66,9 @@ namespace WebListaPrzebojow.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PiosenkaID,IleOdsluchan,Nazwa,Gatunek")] Piosenka piosenka)
+        public async Task<IActionResult> Create([Bind("PiosenkaID,IleOdsluchan,Nazwa,Gatunek,AlbumID")] Piosenka piosenka)
         {
+         
             if (ModelState.IsValid)
             {
                 _context.Add(piosenka);
@@ -80,6 +91,14 @@ namespace WebListaPrzebojow.Controllers
             {
                 return NotFound();
             }
+            List<SelectListItem> albums = _context.albumDb
+       .Select(a => new SelectListItem
+       {
+           Value = a.AlbumID.ToString(),
+           Text = a.Nazwa
+       })
+       .ToList();
+            ViewBag.Albums = albums;
             return View(piosenka);
         }
 
@@ -88,7 +107,7 @@ namespace WebListaPrzebojow.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PiosenkaID,IleOdsluchan,Nazwa,Gatunek")] Piosenka piosenka)
+        public async Task<IActionResult> Edit(int id, [Bind("PiosenkaID,IleOdsluchan,Nazwa,Gatunek,AlbumID")] Piosenka piosenka)
         {
             if (id != piosenka.PiosenkaID)
             {

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ListaPrzebojowContext))]
-    [Migration("20230331173537_test1")]
+    [Migration("20230331190438_test1")]
     partial class test1
     {
         /// <inheritdoc />
