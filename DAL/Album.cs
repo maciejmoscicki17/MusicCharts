@@ -14,7 +14,7 @@ namespace DAL
         public string Nazwa { get; set; }
         public virtual ICollection<AlbumNaCharcie>? AlbumNaCharcieCol { get; set; }
         public virtual ICollection<ArtystaAlbum>? artystaAlbumCol { get; set; }
-
+        public virtual ICollection<Piosenka>? piosenkaCol { get; set; }
 
     }
 }

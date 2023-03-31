@@ -37,14 +37,9 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PiosenkaID")
-                        .HasColumnType("int");
-
                     b.HasKey("AlbumID");
 
                     b.HasIndex("ChartAlbumowID");
-
-                    b.HasIndex("PiosenkaID");
 
                     b.ToTable("Album");
 
@@ -231,6 +226,9 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PiosenkaID"));
 
+                    b.Property<int>("AlbumID")
+                        .HasColumnType("int");
+
                     b.Property<int?>("ChartPiosenekID")
                         .HasColumnType("int");
 
@@ -250,6 +248,8 @@ namespace DAL.Migrations
 
                     b.HasKey("PiosenkaID");
 
+                    b.HasIndex("AlbumID");
+
                     b.HasIndex("ChartPiosenekID");
 
                     b.HasIndex("PlaylistaID");
@@ -260,6 +260,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 1,
+                            AlbumID = 1,
                             Gatunek = "Rap",
                             IleOdsluchan = 430030716,
                             Nazwa = "Rich Flex"
@@ -267,6 +268,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 2,
+                            AlbumID = 1,
                             Gatunek = "Rap",
                             IleOdsluchan = 128496585,
                             Nazwa = "Major Distribution"
@@ -274,6 +276,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 3,
+                            AlbumID = 1,
                             Gatunek = "Rap",
                             IleOdsluchan = 128496585,
                             Nazwa = "On BS"
@@ -281,6 +284,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 4,
+                            AlbumID = 1,
                             Gatunek = "Rap",
                             IleOdsluchan = 76222657,
                             Nazwa = "BackOutsideBoyz"
@@ -288,6 +292,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 5,
+                            AlbumID = 1,
                             Gatunek = "Rap",
                             IleOdsluchan = 87005583,
                             Nazwa = "Privileged Rappers"
@@ -295,6 +300,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 6,
+                            AlbumID = 2,
                             Gatunek = "Rap",
                             IleOdsluchan = 87005583,
                             Nazwa = "rockstar"
@@ -302,6 +308,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 7,
+                            AlbumID = 2,
                             Gatunek = "Rap",
                             IleOdsluchan = 919573559,
                             Nazwa = "Candy Paint"
@@ -309,6 +316,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 8,
+                            AlbumID = 2,
                             Gatunek = "Rap",
                             IleOdsluchan = 919573559,
                             Nazwa = "Otherside"
@@ -316,6 +324,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 9,
+                            AlbumID = 2,
                             Gatunek = "Rap",
                             IleOdsluchan = 396452492,
                             Nazwa = "Ball For Me"
@@ -323,6 +332,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 10,
+                            AlbumID = 2,
                             Gatunek = "Rap",
                             IleOdsluchan = 356452492,
                             Nazwa = "Stay"
@@ -330,6 +340,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 11,
+                            AlbumID = 3,
                             Gatunek = "Rap",
                             IleOdsluchan = 155198494,
                             Nazwa = "Barbie Dreams"
@@ -337,6 +348,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 12,
+                            AlbumID = 3,
                             Gatunek = "Rap",
                             IleOdsluchan = 919573559,
                             Nazwa = "Chun-Li"
@@ -344,6 +356,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 13,
+                            AlbumID = 3,
                             Gatunek = "Rap",
                             IleOdsluchan = 919573559,
                             Nazwa = "Good Form"
@@ -351,6 +364,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 14,
+                            AlbumID = 3,
                             Gatunek = "Rap",
                             IleOdsluchan = 396452492,
                             Nazwa = "Miami"
@@ -358,6 +372,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 15,
+                            AlbumID = 3,
                             Gatunek = "Rap",
                             IleOdsluchan = 356452492,
                             Nazwa = "Run & Hide"
@@ -365,6 +380,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 16,
+                            AlbumID = 4,
                             Gatunek = "Pop",
                             IleOdsluchan = 356453192,
                             Nazwa = "Alice"
@@ -372,6 +388,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 17,
+                            AlbumID = 4,
                             Gatunek = "Pop",
                             IleOdsluchan = 354553192,
                             Nazwa = "Stupid Love"
@@ -379,6 +396,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 18,
+                            AlbumID = 4,
                             Gatunek = "Pop",
                             IleOdsluchan = 544553192,
                             Nazwa = "Rain On Me"
@@ -386,6 +404,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 19,
+                            AlbumID = 4,
                             Gatunek = "Pop",
                             IleOdsluchan = 234553192,
                             Nazwa = "Replay"
@@ -393,6 +412,7 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 20,
+                            AlbumID = 4,
                             Gatunek = "Pop",
                             IleOdsluchan = 22153192,
                             Nazwa = "Enigma"
@@ -897,10 +917,6 @@ namespace DAL.Migrations
                     b.HasOne("DAL.ChartAlbumow", null)
                         .WithMany("albumy")
                         .HasForeignKey("ChartAlbumowID");
-
-                    b.HasOne("DAL.Piosenka", null)
-                        .WithMany("AlbumCol")
-                        .HasForeignKey("PiosenkaID");
                 });
 
             modelBuilder.Entity("DAL.ArtystaAlbum", b =>
@@ -946,6 +962,12 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Piosenka", b =>
                 {
+                    b.HasOne("DAL.Album", "album")
+                        .WithMany("piosenkaCol")
+                        .HasForeignKey("AlbumID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("DAL.ChartPiosenek", null)
                         .WithMany("piosenki")
                         .HasForeignKey("ChartPiosenekID");
@@ -953,6 +975,8 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Playlista", null)
                         .WithMany("piosenkaCol")
                         .HasForeignKey("PlaylistaID");
+
+                    b.Navigation("album");
                 });
 
             modelBuilder.Entity("DAL.PiosenkaArtysta", b =>
@@ -1036,6 +1060,8 @@ namespace DAL.Migrations
                     b.Navigation("AlbumNaCharcieCol");
 
                     b.Navigation("artystaAlbumCol");
+
+                    b.Navigation("piosenkaCol");
                 });
 
             modelBuilder.Entity("DAL.Artysta", b =>
@@ -1070,8 +1096,6 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Piosenka", b =>
                 {
-                    b.Navigation("AlbumCol");
-
                     b.Navigation("PiosenkaNaCharcieCol");
 
                     b.Navigation("PiosenkaNaPlayliscieCol");

@@ -77,6 +77,13 @@ namespace ListaPrzebojow.DAL
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Piosenka>()
+                .HasOne<Album>(cr => cr.album)
+                .WithMany(c => c.piosenkaCol)
+                .HasForeignKey(cr => cr.AlbumID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<AlbumNaCharcie>()
                 .HasOne<ChartAlbumow>(cr => cr.chartAlbumow)
                 .WithMany(r => r.AlbumNaCharcieCol)
@@ -130,26 +137,26 @@ namespace ListaPrzebojow.DAL
 
 
             modelBuilder.Entity<Piosenka>().HasData(
-                new Piosenka { PiosenkaID = 1, IleOdsluchan = 430030716, Nazwa = "Rich Flex", Gatunek = "Rap" },
-                new Piosenka { PiosenkaID = 2, IleOdsluchan = 128496585, Nazwa = "Major Distribution", Gatunek = "Rap" },
-                new Piosenka { PiosenkaID = 3, IleOdsluchan = 128496585, Nazwa = "On BS", Gatunek = "Rap" },
-                new Piosenka { PiosenkaID = 4, IleOdsluchan = 76222657, Nazwa = "BackOutsideBoyz", Gatunek = "Rap" },
-                new Piosenka { PiosenkaID = 5, IleOdsluchan = 87005583, Nazwa = "Privileged Rappers", Gatunek = "Rap" },
-                new Piosenka { PiosenkaID = 6, IleOdsluchan = 87005583, Nazwa = "rockstar", Gatunek = "Rap" },
-                new Piosenka { PiosenkaID = 7, IleOdsluchan = 919573559, Nazwa = "Candy Paint", Gatunek = "Rap" },
-                new Piosenka { PiosenkaID = 8, IleOdsluchan = 919573559, Nazwa = "Otherside", Gatunek = "Rap" },
-                new Piosenka { PiosenkaID = 9, IleOdsluchan = 396452492, Nazwa = "Ball For Me", Gatunek = "Rap" },
-                new Piosenka { PiosenkaID = 10, IleOdsluchan = 356452492, Nazwa = "Stay", Gatunek = "Rap" },
-                new Piosenka { PiosenkaID = 11, IleOdsluchan = 155198494, Nazwa = "Barbie Dreams", Gatunek = "Rap" },
-                new Piosenka { PiosenkaID = 12, IleOdsluchan = 919573559, Nazwa = "Chun-Li", Gatunek = "Rap" },
-                new Piosenka { PiosenkaID = 13, IleOdsluchan = 919573559, Nazwa = "Good Form", Gatunek = "Rap" },
-                new Piosenka { PiosenkaID = 14, IleOdsluchan = 396452492, Nazwa = "Miami", Gatunek = "Rap" },
-                new Piosenka { PiosenkaID = 15, IleOdsluchan = 356452492, Nazwa = "Run & Hide", Gatunek = "Rap" },
-                new Piosenka { PiosenkaID = 16, IleOdsluchan = 356453192, Nazwa = "Alice", Gatunek = "Pop" },
-                new Piosenka { PiosenkaID = 17, IleOdsluchan = 354553192, Nazwa = "Stupid Love", Gatunek = "Pop" },
-                new Piosenka { PiosenkaID = 18, IleOdsluchan = 544553192, Nazwa = "Rain On Me", Gatunek = "Pop" },
-                new Piosenka { PiosenkaID = 19, IleOdsluchan = 234553192, Nazwa = "Replay", Gatunek = "Pop" },
-                new Piosenka { PiosenkaID = 20, IleOdsluchan = 22153192, Nazwa = "Enigma", Gatunek = "Pop" }
+                new Piosenka { PiosenkaID = 1, IleOdsluchan = 430030716, Nazwa = "Rich Flex", Gatunek = "Rap", AlbumID=1 },
+                new Piosenka { PiosenkaID = 2, IleOdsluchan = 128496585, Nazwa = "Major Distribution", Gatunek = "Rap", AlbumID = 1 },
+                new Piosenka { PiosenkaID = 3, IleOdsluchan = 128496585, Nazwa = "On BS", Gatunek = "Rap", AlbumID = 1 },
+                new Piosenka { PiosenkaID = 4, IleOdsluchan = 76222657, Nazwa = "BackOutsideBoyz", Gatunek = "Rap", AlbumID = 1 },
+                new Piosenka { PiosenkaID = 5, IleOdsluchan = 87005583, Nazwa = "Privileged Rappers", Gatunek = "Rap", AlbumID = 1 },
+                new Piosenka { PiosenkaID = 6, IleOdsluchan = 87005583, Nazwa = "rockstar", Gatunek = "Rap", AlbumID = 2 },
+                new Piosenka { PiosenkaID = 7, IleOdsluchan = 919573559, Nazwa = "Candy Paint", Gatunek = "Rap", AlbumID = 2 },
+                new Piosenka { PiosenkaID = 8, IleOdsluchan = 919573559, Nazwa = "Otherside", Gatunek = "Rap", AlbumID = 2 },
+                new Piosenka { PiosenkaID = 9, IleOdsluchan = 396452492, Nazwa = "Ball For Me", Gatunek = "Rap", AlbumID = 2 },
+                new Piosenka { PiosenkaID = 10, IleOdsluchan = 356452492, Nazwa = "Stay", Gatunek = "Rap", AlbumID = 2 },
+                new Piosenka { PiosenkaID = 11, IleOdsluchan = 155198494, Nazwa = "Barbie Dreams", Gatunek = "Rap", AlbumID = 3 },
+                new Piosenka { PiosenkaID = 12, IleOdsluchan = 919573559, Nazwa = "Chun-Li", Gatunek = "Rap", AlbumID = 3 },
+                new Piosenka { PiosenkaID = 13, IleOdsluchan = 919573559, Nazwa = "Good Form", Gatunek = "Rap", AlbumID = 3 },
+                new Piosenka { PiosenkaID = 14, IleOdsluchan = 396452492, Nazwa = "Miami", Gatunek = "Rap", AlbumID = 3 },
+                new Piosenka { PiosenkaID = 15, IleOdsluchan = 356452492, Nazwa = "Run & Hide", Gatunek = "Rap", AlbumID = 3 },
+                new Piosenka { PiosenkaID = 16, IleOdsluchan = 356453192, Nazwa = "Alice", Gatunek = "Pop", AlbumID = 4 },
+                new Piosenka { PiosenkaID = 17, IleOdsluchan = 354553192, Nazwa = "Stupid Love", Gatunek = "Pop", AlbumID = 4 },
+                new Piosenka { PiosenkaID = 18, IleOdsluchan = 544553192, Nazwa = "Rain On Me", Gatunek = "Pop", AlbumID = 4 },
+                new Piosenka { PiosenkaID = 19, IleOdsluchan = 234553192, Nazwa = "Replay", Gatunek = "Pop", AlbumID = 4 },
+                new Piosenka { PiosenkaID = 20, IleOdsluchan = 22153192, Nazwa = "Enigma", Gatunek = "Pop", AlbumID = 4 }
 );
 
             modelBuilder.Entity<Artysta>().HasData(
