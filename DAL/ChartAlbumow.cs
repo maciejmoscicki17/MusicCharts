@@ -12,13 +12,12 @@ namespace DAL
     [Table("ChartAlbumow")]
     public class ChartAlbumow
     {
-       
+
         [Key]
-        public int ChartAlbumowID { get;set; }
         [ForeignKey("ChartID")]
-        public int ChartID { get; set; }
+        public int ChartAlbumowID { get;set; }
         public ICollection<Album> albumy { get; set; }
-        public virtual Chart? chart { get; set; }
+        public virtual Chart chart { get; set; }
         public virtual ICollection<AlbumNaCharcie> AlbumNaCharcieCol { get; set; }
     }
 }

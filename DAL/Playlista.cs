@@ -17,5 +17,6 @@ namespace DAL
         public ICollection<Piosenka> piosenkaCol { get; set; }
         public ICollection<PiosenkaNaPlayliscie> PiosenkaNaPlayliscieCol { get; set; }
         public string Gatunek { get; set; }
+        public string Nazwa { get; set; }
     }
 }

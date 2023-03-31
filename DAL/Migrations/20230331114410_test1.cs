@@ -31,8 +31,7 @@ namespace DAL.Migrations
                 columns: table => new
                 {
                     ChartID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ChartAlbumowID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
                 },
                 constraints: table =>
                 {
@@ -45,7 +44,8 @@ namespace DAL.Migrations
                 {
                     PlaylistaID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Gatunek = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Gatunek = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,8 +56,7 @@ namespace DAL.Migrations
                 name: "ChartAlbumow",
                 columns: table => new
                 {
-                    ChartAlbumowID = table.Column<int>(type: "int", nullable: false),
-                    ChartID = table.Column<int>(type: "int", nullable: false)
+                    ChartAlbumowID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -74,8 +73,7 @@ namespace DAL.Migrations
                 name: "ChartPiosenek",
                 columns: table => new
                 {
-                    ChartPiosenekID = table.Column<int>(type: "int", nullable: false),
-                    ChartID = table.Column<int>(type: "int", nullable: false)
+                    ChartPiosenekID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -262,22 +260,93 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Album",
+                columns: new[] { "AlbumID", "ChartAlbumowID", "Nazwa", "PiosenkaID" },
+                values: new object[,]
+                {
+                    { 1, null, "Her Loss", null },
+                    { 2, null, "beerbongs & bentleys", null },
+                    { 3, null, "Queen", null },
+                    { 4, null, "Chromatica", null }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Artysta",
                 columns: new[] { "ArtystaID", "Pseudonim", "SluchaczeWMiesiacu" },
                 values: new object[,]
                 {
-                    { 1, "Artysta 1", 1000 },
-                    { 2, "Artysta 2", 500 }
+                    { 1, "Drake", 1000 },
+                    { 2, "21 Savage", 500 },
+                    { 3, "Post Malone", 579841 },
+                    { 4, "Nicki Minaj", 676543 },
+                    { 5, "Lil Wayne", 692834 },
+                    { 6, "Lady Gaga", 44355321 },
+                    { 7, "Ariana Grande", 44355321 }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Chart",
+                column: "ChartID",
+                value: 1);
 
             migrationBuilder.InsertData(
                 table: "Piosenka",
                 columns: new[] { "PiosenkaID", "ChartPiosenekID", "Gatunek", "IleOdsluchan", "Nazwa", "PlaylistaID" },
                 values: new object[,]
                 {
-                    { 1, null, "Rock", 100, "Piosenka 1", null },
-                    { 2, null, "Pop", 50, "Piosenka 2", null }
+                    { 1, null, "Rap", 430030716, "Rich Flex", null },
+                    { 2, null, "Rap", 128496585, "Major Distribution", null },
+                    { 3, null, "Rap", 128496585, "On BS", null },
+                    { 4, null, "Rap", 76222657, "BackOutsideBoyz", null },
+                    { 5, null, "Rap", 87005583, "Privileged Rappers", null },
+                    { 6, null, "Rap", 87005583, "rockstar", null },
+                    { 7, null, "Rap", 919573559, "Candy Paint", null },
+                    { 8, null, "Rap", 919573559, "Otherside", null },
+                    { 9, null, "Rap", 396452492, "Ball For Me", null },
+                    { 10, null, "Rap", 356452492, "Stay", null },
+                    { 11, null, "Rap", 155198494, "Barbie Dreams", null },
+                    { 12, null, "Rap", 919573559, "Chun-Li", null },
+                    { 13, null, "Rap", 919573559, "Good Form", null },
+                    { 14, null, "Rap", 396452492, "Miami", null },
+                    { 15, null, "Rap", 356452492, "Run & Hide", null },
+                    { 16, null, "Pop", 356453192, "Alice", null },
+                    { 17, null, "Pop", 354553192, "Stupid Love", null },
+                    { 18, null, "Pop", 544553192, "Rain On Me", null },
+                    { 19, null, "Pop", 234553192, "Replay", null },
+                    { 20, null, "Pop", 22153192, "Enigma", null }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Playlista",
+                columns: new[] { "PlaylistaID", "Gatunek", "Nazwa" },
+                values: new object[,]
+                {
+                    { 1, "Rap", "Vibe" },
+                    { 2, "Rap", "Relax" },
+                    { 3, "Rap", "Sunday" },
+                    { 4, "Pop", "Girls Night" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ArtystaAlbum",
+                columns: new[] { "AlbumID", "ArtystaID" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 3 },
+                    { 3, 4 },
+                    { 4, 6 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ChartAlbumow",
+                column: "ChartAlbumowID",
+                value: 1);
+
+            migrationBuilder.InsertData(
+                table: "ChartPiosenek",
+                column: "ChartPiosenekID",
+                value: 1);
 
             migrationBuilder.InsertData(
                 table: "PiosenkaArtysta",
@@ -285,7 +354,97 @@ namespace DAL.Migrations
                 values: new object[,]
                 {
                     { 1, 1 },
-                    { 2, 2 }
+                    { 2, 1 },
+                    { 2, 2 },
+                    { 1, 3 },
+                    { 2, 3 },
+                    { 1, 4 },
+                    { 1, 5 },
+                    { 2, 5 },
+                    { 2, 6 },
+                    { 3, 6 },
+                    { 3, 7 },
+                    { 3, 8 },
+                    { 3, 9 },
+                    { 4, 9 },
+                    { 3, 10 },
+                    { 4, 11 },
+                    { 4, 12 },
+                    { 4, 13 },
+                    { 5, 13 },
+                    { 4, 14 },
+                    { 4, 15 },
+                    { 6, 16 },
+                    { 6, 17 },
+                    { 6, 18 },
+                    { 7, 18 },
+                    { 6, 19 },
+                    { 6, 20 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PiosenkaNaPlayliscie",
+                columns: new[] { "PiosenkaID", "PlaylistaID" },
+                values: new object[,]
+                {
+                    { 1, 2 },
+                    { 2, 3 },
+                    { 3, 2 },
+                    { 4, 3 },
+                    { 5, 3 },
+                    { 6, 1 },
+                    { 6, 3 },
+                    { 8, 1 },
+                    { 8, 2 },
+                    { 9, 1 },
+                    { 10, 2 },
+                    { 12, 3 },
+                    { 13, 2 },
+                    { 14, 1 },
+                    { 14, 4 },
+                    { 15, 1 },
+                    { 15, 4 },
+                    { 18, 4 },
+                    { 19, 4 },
+                    { 20, 4 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AlbumNaCharcie",
+                columns: new[] { "AlbumID", "ChartAlbumowID" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 1 },
+                    { 3, 1 },
+                    { 4, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PiosenkaNaCharcie",
+                columns: new[] { "ChartPiosenekID", "PiosenkaID", "PozycjaPiosenki" },
+                values: new object[,]
+                {
+                    { 1, 1, 0 },
+                    { 1, 2, 0 },
+                    { 1, 3, 0 },
+                    { 1, 4, 0 },
+                    { 1, 5, 0 },
+                    { 1, 6, 0 },
+                    { 1, 7, 0 },
+                    { 1, 8, 0 },
+                    { 1, 9, 0 },
+                    { 1, 10, 0 },
+                    { 1, 11, 0 },
+                    { 1, 12, 0 },
+                    { 1, 13, 0 },
+                    { 1, 14, 0 },
+                    { 1, 15, 0 },
+                    { 1, 16, 0 },
+                    { 1, 17, 0 },
+                    { 1, 18, 0 },
+                    { 1, 19, 0 },
+                    { 1, 20, 0 }
                 });
 
             migrationBuilder.CreateIndex(

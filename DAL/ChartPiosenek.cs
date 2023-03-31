@@ -12,11 +12,10 @@ namespace DAL
     public class ChartPiosenek
     {
         [Key]
+        [ForeignKey("ChartID")]
         public int ChartPiosenekID { get; set; }
         public ICollection<Piosenka> piosenki { get; set; }
         public virtual ICollection<PiosenkaNaCharcie> PiosenkaNaCharcieCol { get; set; }
-        [ForeignKey("ChartID")]
-        public int ChartID { get; set; }
         public virtual Chart chart { get; set; }
 
 
