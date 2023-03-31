@@ -4,16 +4,16 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1 class="centered">Edit</h1>
 
-<h4>Album</h4>
+<h4 class="centered">Album</h4>
 <hr />
-<div class="row">
+<div class="row justify-content-center">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="AlbumID" />
-            <div class="form-group">
+            <div class="form-group mb-2">
                 <label asp-for="Nazwa" class="control-label"></label>
                 <input asp-for="Nazwa" class="form-control" />
                 <span asp-validation-for="Nazwa" class="text-danger"></span>
@@ -25,7 +25,7 @@
     </div>
 </div>
 
-<div>
+<div class="centered">
     <a asp-action="Index">Back to List</a>
 </div>
 

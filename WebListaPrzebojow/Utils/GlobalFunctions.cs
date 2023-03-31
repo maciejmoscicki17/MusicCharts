@@ -15,6 +15,10 @@ namespace WebListaPrzebojow.Utils
         {
             return _context.albumDb.FirstOrDefault(a => a.AlbumID == albumID).Nazwa;
         }
+        public static string GetSongNameById(int songID)
+        {
+            return _context.piosenkaDb.FirstOrDefault(a => a.PiosenkaID == songID).Nazwa;
+        }
     }
 
 }

@@ -16,3 +16,26 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+th{
+    text-align: center;
+}
+
+td {
+    text-align: center;
+}
+
+label, input, span, select, option{
+    text-align: center;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.centered{
+    text-align: center;
+    margin-inline: auto;
+}
