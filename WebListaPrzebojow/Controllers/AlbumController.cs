@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using ListaPrzebojow.DAL;
@@ -13,30 +8,35 @@ namespace WebListaPrzebojow.Controllers
     public class AlbumController : Controller
     {
         private readonly ListaPrzebojowContext _context;
+        private readonly UnitOfWork unitOfWork;
 
         public AlbumController(ListaPrzebojowContext context)
         {
             _context = context;
+            unitOfWork = new UnitOfWork(_context);
         }
 
         // GET: Album
         public async Task<IActionResult> Index()
         {
-              return _context.albumDb != null ? 
-                          View(await _context.albumDb.ToListAsync()) :
-                          Problem("Entity set 'ListaPrzebojowContext.albumDb'  is null.");
+            //var albums = await unitOfWork.Albums.GetAllAsync();
+            return unitOfWork.Albums != null ? 
+                View(await unitOfWork.Albums.GetAllAsync()) : 
+                Problem("Entity set 'ListaPrzebojowContext.albumDb'  is null.");
         }
 
         // GET: Album/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.albumDb == null)
+            if (id == null || unitOfWork.Albums == null)
             {
                 return NotFound();
             }
+            var test = unitOfWork.Albums == null;
 
-            var album = await _context.albumDb
-                .FirstOrDefaultAsync(m => m.AlbumID == id);
+            var album = await unitOfWork.Albums
+                .FirstOrDefaultAsync(id);
+
             if (album == null)
             {
                 return NotFound();
@@ -60,8 +60,9 @@ namespace WebListaPrzebojow.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(album);
-                await _context.SaveChangesAsync();
+                unitOfWork.Albums.Add(album);
+                await unitOfWork.SaveAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             return View(album);
@@ -70,12 +71,12 @@ namespace WebListaPrzebojow.Controllers
         // GET: Album/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.albumDb == null)
+            if (id == null || unitOfWork.Albums == null)
             {
                 return NotFound();
             }
 
-            var album = await _context.albumDb.FindAsync(id);
+            var album = await unitOfWork.Albums.FindAsync(id);
             if (album == null)
             {
                 return NotFound();
@@ -99,8 +100,8 @@ namespace WebListaPrzebojow.Controllers
             {
                 try
                 {
-                    _context.Update(album);
-                    await _context.SaveChangesAsync();
+                    unitOfWork.Albums.Update(album);
+                    await unitOfWork.SaveAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -121,13 +122,13 @@ namespace WebListaPrzebojow.Controllers
         // GET: Album/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.albumDb == null)
+            if (id == null || unitOfWork.Albums == null)
             {
                 return NotFound();
             }
 
-            var album = await _context.albumDb
-                .FirstOrDefaultAsync(m => m.AlbumID == id);
+            var album = await unitOfWork.Albums
+                .FirstOrDefaultAsync(id);
             if (album == null)
             {
                 return NotFound();
@@ -141,23 +142,23 @@ namespace WebListaPrzebojow.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.albumDb == null)
+            if (unitOfWork.Albums == null)
             {
                 return Problem("Entity set 'ListaPrzebojowContext.albumDb'  is null.");
             }
-            var album = await _context.albumDb.FindAsync(id);
+            var album = await unitOfWork.Albums.FindAsync(id);
             if (album != null)
             {
-                _context.albumDb.Remove(album);
+                unitOfWork.Albums.Remove(album);
             }
             
-            await _context.SaveChangesAsync();
+            await unitOfWork.SaveAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AlbumExists(int id)
         {
-          return (_context.albumDb?.Any(e => e.AlbumID == id)).GetValueOrDefault();
+          return (unitOfWork.Albums?.Any(id)).GetValueOrDefault();
         }
     }
 }

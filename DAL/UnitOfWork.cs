@@ -3,7 +3,7 @@ using DAL.Repositories;
 
 namespace ListaPrzebojow.DAL
 {
-    public class UnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly ListaPrzebojowContext _context;
 
@@ -28,6 +28,11 @@ namespace ListaPrzebojow.DAL
         public void Save()
         {
             _context.SaveChanges();
+        }
+
+        public async Task<int> SaveAsync()
+        {
+            return await _context.SaveChangesAsync();
         }
 
         public void Dispose()

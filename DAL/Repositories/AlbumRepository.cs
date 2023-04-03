@@ -1,5 +1,6 @@
 ﻿using DAL.Interfaces;
 using ListaPrzebojow.DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
@@ -23,7 +24,7 @@ namespace DAL.Repositories
 
         }
 
-        public Album GetById(int id)
+        public Album? GetById(int id)
         {
             return _context.albumDb.FirstOrDefault(a => a.AlbumID == id);
         }
@@ -32,5 +33,33 @@ namespace DAL.Repositories
         {
             _context.albumDb.Remove(album);
         }
+
+        public async Task<IEnumerable<Album>> GetAllAsync()
+        {
+            return await _context.albumDb.ToListAsync();
+        }
+
+        public void Update(Album album)
+        {
+            _context.albumDb.Update(album);
+            //return await _context.SaveChangesAsync() == 1;
+            //return al != null;
+        }
+
+        public async Task<Album?> FirstOrDefaultAsync(int? id)
+        {
+            return await _context.albumDb.FirstOrDefaultAsync(m => m.AlbumID == id);
+        }
+
+        public async Task<Album?> FindAsync(int? id)
+        {
+            return await _context.albumDb.FindAsync(id);
+        }
+
+        public bool Any(int id)
+        {
+            return _context.albumDb.Any(e => e.AlbumID == id);
+        }
+
     }
 }

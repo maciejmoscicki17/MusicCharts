@@ -11,6 +11,7 @@
 
 
         void Save();
+        Task<int> SaveAsync();
         void Dispose();
     }
 }
