@@ -1,5 +1,6 @@
 ﻿using DAL.Interfaces;
 using ListaPrzebojow.DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
@@ -31,6 +32,31 @@ namespace DAL.Repositories
         public void Remove(Artysta artysta)
         {
             _context.artystaDb.Remove(artysta);
+        }
+
+        public async Task<IEnumerable<Artysta>> GetAllAsync()
+        {
+            return await _context.artystaDb.ToListAsync();
+        }
+
+        public void Update(Artysta artysta)
+        {
+            _context.artystaDb.Update(artysta);
+        }
+
+        public async Task<Artysta?> FirstOrDefaultAsync(int? id)
+        {
+            return await _context.artystaDb.FirstOrDefaultAsync(m => m.ArtystaID == id);
+        }
+
+        public async Task<Artysta?> FindAsync(int? id)
+        {
+            return await _context.artystaDb.FindAsync(id);
+        }
+
+        public bool Any(int id)
+        {
+            return _context.artystaDb.Any(e => e.ArtystaID == id);
         }
     }
 }

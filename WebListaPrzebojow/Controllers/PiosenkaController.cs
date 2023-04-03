@@ -14,31 +14,33 @@ namespace WebListaPrzebojow.Controllers
     public class PiosenkaController : Controller
     {
         private readonly ListaPrzebojowContext _context;
+        private readonly UnitOfWork unitOfWork;
 
         public PiosenkaController(ListaPrzebojowContext context)
         {
             _context = context;
+            unitOfWork = new UnitOfWork(context);
             GlobalFunctions.Init(_context);
         }
 
         // GET: Piosenka
         public async Task<IActionResult> Index()
         {
-              return _context.piosenkaDb != null ? 
-                          View(await _context.piosenkaDb.ToListAsync()) :
+              return unitOfWork.Piosenki != null ? 
+                          View(await unitOfWork.Piosenki.GetAllAsync()) :
                           Problem("Entity set 'ListaPrzebojowContext.piosenkaDb'  is null.");
         }
 
         // GET: Piosenka/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.piosenkaDb == null)
+            if (id == null || unitOfWork.Piosenki == null)
             {
                 return NotFound();
             }
 
-            var piosenka = await _context.piosenkaDb
-                .FirstOrDefaultAsync(m => m.PiosenkaID == id);
+            var piosenka = await unitOfWork.Piosenki
+                .FirstOrDefaultAsync(id);
             if (piosenka == null)
             {
                 return NotFound();
@@ -50,13 +52,14 @@ namespace WebListaPrzebojow.Controllers
         // GET: Piosenka/Create
         public IActionResult Create()
         {
-            List<SelectListItem> albums = _context.albumDb
-        .Select(a => new SelectListItem
-        {
-            Value = a.AlbumID.ToString(),
-            Text = a.Nazwa
-        })
-        .ToList();
+            var albums = unitOfWork.Albums.GetAll()
+                .Select(a => new SelectListItem
+                {
+                    Value = a.AlbumID.ToString(),
+                    Text = a.Nazwa
+                })
+                .ToList();
+
             ViewBag.Albums = albums;
             return View();
         }
@@ -71,8 +74,8 @@ namespace WebListaPrzebojow.Controllers
          
             if (ModelState.IsValid)
             {
-                _context.Add(piosenka);
-                await _context.SaveChangesAsync();
+                unitOfWork.Piosenki.Add(piosenka);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(piosenka);
@@ -81,26 +84,27 @@ namespace WebListaPrzebojow.Controllers
         // GET: Piosenka/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.piosenkaDb == null)
+            if (id == null || unitOfWork.Piosenki == null)
             {
                 return NotFound();
             }
 
-            var piosenka = await _context.piosenkaDb.FindAsync(id);
+            var piosenka = await unitOfWork.Piosenki.FindAsync(id);
             if (piosenka == null)
             {
                 return NotFound();
             }
-            List<SelectListItem> albums = _context.albumDb
-       .Select(a => new SelectListItem
-       {
-           Value = a.AlbumID.ToString(),
-           Text = a.Nazwa
-       })
-       .ToList();
+            var albums = unitOfWork.Albums.GetAll()
+                .Select(a => new SelectListItem
+                {
+                    Value = a.AlbumID.ToString(),
+                    Text = a.Nazwa
+                })
+                .ToList();
+
             ViewBag.Albums = albums;
             return View(piosenka);
-        }
+            }
 
         // POST: Piosenka/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -118,8 +122,8 @@ namespace WebListaPrzebojow.Controllers
             {
                 try
                 {
-                    _context.Update(piosenka);
-                    await _context.SaveChangesAsync();
+                    unitOfWork.Piosenki.Update(piosenka);
+                    await unitOfWork.SaveAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -140,13 +144,13 @@ namespace WebListaPrzebojow.Controllers
         // GET: Piosenka/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.piosenkaDb == null)
+            if (id == null || unitOfWork.Piosenki == null)
             {
                 return NotFound();
             }
 
-            var piosenka = await _context.piosenkaDb
-                .FirstOrDefaultAsync(m => m.PiosenkaID == id);
+            var piosenka = await unitOfWork.Piosenki
+                .FirstOrDefaultAsync(id);
             if (piosenka == null)
             {
                 return NotFound();
@@ -160,23 +164,23 @@ namespace WebListaPrzebojow.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.piosenkaDb == null)
+            if (unitOfWork.Piosenki == null)
             {
                 return Problem("Entity set 'ListaPrzebojowContext.piosenkaDb'  is null.");
             }
-            var piosenka = await _context.piosenkaDb.FindAsync(id);
+            var piosenka = await unitOfWork.Piosenki.FindAsync(id);
             if (piosenka != null)
             {
-                _context.piosenkaDb.Remove(piosenka);
+                unitOfWork.Piosenki.Remove(piosenka);
             }
             
-            await _context.SaveChangesAsync();
+            await unitOfWork.SaveAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PiosenkaExists(int id)
         {
-          return (_context.piosenkaDb?.Any(e => e.PiosenkaID == id)).GetValueOrDefault();
+          return (unitOfWork.Piosenki?.Any(id)).GetValueOrDefault();
         }
     }
 }

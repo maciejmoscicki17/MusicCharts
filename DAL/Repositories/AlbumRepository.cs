@@ -42,8 +42,6 @@ namespace DAL.Repositories
         public void Update(Album album)
         {
             _context.albumDb.Update(album);
-            //return await _context.SaveChangesAsync() == 1;
-            //return al != null;
         }
 
         public async Task<Album?> FirstOrDefaultAsync(int? id)

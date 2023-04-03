@@ -13,30 +13,32 @@ namespace WebListaPrzebojow.Controllers
     public class ArtystaController : Controller
     {
         private readonly ListaPrzebojowContext _context;
+        private readonly UnitOfWork unitOfWork;
 
         public ArtystaController(ListaPrzebojowContext context)
         {
             _context = context;
+            unitOfWork = new UnitOfWork(_context);
         }
 
         // GET: Artysta
         public async Task<IActionResult> Index()
         {
-              return _context.artystaDb != null ? 
-                          View(await _context.artystaDb.ToListAsync()) :
+              return unitOfWork.Artyści != null ? 
+                          View(await unitOfWork.Artyści.GetAllAsync()) :
                           Problem("Entity set 'ListaPrzebojowContext.artystaDb'  is null.");
         }
 
         // GET: Artysta/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.artystaDb == null)
+            if (id == null || unitOfWork.Artyści == null)
             {
                 return NotFound();
             }
 
-            var artysta = await _context.artystaDb
-                .FirstOrDefaultAsync(m => m.ArtystaID == id);
+            var artysta = await unitOfWork.Artyści
+                .FirstOrDefaultAsync(id);
             if (artysta == null)
             {
                 return NotFound();
@@ -60,8 +62,8 @@ namespace WebListaPrzebojow.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(artysta);
-                await _context.SaveChangesAsync();
+                unitOfWork.Artyści.Add(artysta);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(artysta);
@@ -70,12 +72,12 @@ namespace WebListaPrzebojow.Controllers
         // GET: Artysta/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.artystaDb == null)
+            if (id == null || unitOfWork.Artyści == null)
             {
                 return NotFound();
             }
 
-            var artysta = await _context.artystaDb.FindAsync(id);
+            var artysta = await unitOfWork.Artyści.FindAsync(id);
             if (artysta == null)
             {
                 return NotFound();
@@ -99,8 +101,8 @@ namespace WebListaPrzebojow.Controllers
             {
                 try
                 {
-                    _context.Update(artysta);
-                    await _context.SaveChangesAsync();
+                    unitOfWork.Artyści.Update(artysta);
+                    await unitOfWork.SaveAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -121,13 +123,13 @@ namespace WebListaPrzebojow.Controllers
         // GET: Artysta/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.artystaDb == null)
+            if (id == null || unitOfWork.Artyści == null)
             {
                 return NotFound();
             }
 
-            var artysta = await _context.artystaDb
-                .FirstOrDefaultAsync(m => m.ArtystaID == id);
+            var artysta = await unitOfWork.Artyści
+                .FirstOrDefaultAsync(id);
             if (artysta == null)
             {
                 return NotFound();
@@ -141,23 +143,23 @@ namespace WebListaPrzebojow.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.artystaDb == null)
+            if (unitOfWork.Artyści == null)
             {
                 return Problem("Entity set 'ListaPrzebojowContext.artystaDb'  is null.");
             }
-            var artysta = await _context.artystaDb.FindAsync(id);
+            var artysta = await unitOfWork.Artyści.FindAsync(id);
             if (artysta != null)
             {
-                _context.artystaDb.Remove(artysta);
+                unitOfWork.Artyści.Remove(artysta);
             }
             
-            await _context.SaveChangesAsync();
+            await unitOfWork.SaveAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ArtystaExists(int id)
         {
-          return (_context.artystaDb?.Any(e => e.ArtystaID == id)).GetValueOrDefault();
+          return (unitOfWork.Artyści?.Any(id)).GetValueOrDefault();
         }
     }
 }

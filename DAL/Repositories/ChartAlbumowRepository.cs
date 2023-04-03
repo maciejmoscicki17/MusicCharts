@@ -1,5 +1,6 @@
 ﻿using DAL.Interfaces;
 using ListaPrzebojow.DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
@@ -31,6 +32,31 @@ namespace DAL.Repositories
         public void Remove(ChartAlbumow chart)
         {
             _context.chartAlbumowDb.Remove(chart);
+        }
+
+        public async Task<IEnumerable<ChartAlbumow>> GetAllAsync()
+        {
+            return await _context.chartAlbumowDb.ToListAsync();
+        }
+
+        public void Update(ChartAlbumow chartAlbumow)
+        {
+            _context.chartAlbumowDb.Update(chartAlbumow);
+        }
+
+        public async Task<ChartAlbumow?> FirstOrDefaultAsync(int? id)
+        {
+            return await _context.chartAlbumowDb.FirstOrDefaultAsync(m => m.ChartAlbumowID == id);
+        }
+
+        public async Task<ChartAlbumow?> FindAsync(int? id)
+        {
+            return await _context.chartAlbumowDb.FindAsync(id);
+        }
+
+        public bool Any(int id)
+        {
+            return _context.chartAlbumowDb.Any(e => e.ChartAlbumowID == id);
         }
     }
 }

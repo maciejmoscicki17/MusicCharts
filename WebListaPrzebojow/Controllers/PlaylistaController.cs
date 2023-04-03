@@ -13,30 +13,32 @@ namespace WebListaPrzebojow.Controllers
     public class PlaylistaController : Controller
     {
         private readonly ListaPrzebojowContext _context;
+        private readonly UnitOfWork unitOfWork;
 
         public PlaylistaController(ListaPrzebojowContext context)
         {
             _context = context;
+            unitOfWork = new UnitOfWork(context);
         }
 
         // GET: Playlista
         public async Task<IActionResult> Index()
         {
-              return _context.playlistaDb != null ? 
-                          View(await _context.playlistaDb.ToListAsync()) :
+              return unitOfWork.Playlisty != null ? 
+                          View(await unitOfWork.Playlisty.GetAllAsync()) :
                           Problem("Entity set 'ListaPrzebojowContext.playlistaDb'  is null.");
         }
 
         // GET: Playlista/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.playlistaDb == null)
+            if (id == null || unitOfWork.Playlisty == null)
             {
                 return NotFound();
             }
 
-            var playlista = await _context.playlistaDb
-                .FirstOrDefaultAsync(m => m.PlaylistaID == id);
+            var playlista = await unitOfWork.Playlisty
+                .FirstOrDefaultAsync(id);
             if (playlista == null)
             {
                 return NotFound();
@@ -60,8 +62,8 @@ namespace WebListaPrzebojow.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(playlista);
-                await _context.SaveChangesAsync();
+                unitOfWork.Playlisty.Add(playlista);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(playlista);
@@ -70,12 +72,12 @@ namespace WebListaPrzebojow.Controllers
         // GET: Playlista/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.playlistaDb == null)
+            if (id == null || unitOfWork.Playlisty == null)
             {
                 return NotFound();
             }
 
-            var playlista = await _context.playlistaDb.FindAsync(id);
+            var playlista = await unitOfWork.Playlisty.FindAsync(id);
             if (playlista == null)
             {
                 return NotFound();
@@ -99,8 +101,8 @@ namespace WebListaPrzebojow.Controllers
             {
                 try
                 {
-                    _context.Update(playlista);
-                    await _context.SaveChangesAsync();
+                    unitOfWork.Playlisty.Update(playlista);
+                    await unitOfWork.SaveAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -121,13 +123,13 @@ namespace WebListaPrzebojow.Controllers
         // GET: Playlista/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.playlistaDb == null)
+            if (id == null || unitOfWork.Playlisty == null)
             {
                 return NotFound();
             }
 
-            var playlista = await _context.playlistaDb
-                .FirstOrDefaultAsync(m => m.PlaylistaID == id);
+            var playlista = await unitOfWork.Playlisty
+                .FirstOrDefaultAsync(id);
             if (playlista == null)
             {
                 return NotFound();
@@ -141,23 +143,23 @@ namespace WebListaPrzebojow.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.playlistaDb == null)
+            if (unitOfWork.Playlisty == null)
             {
                 return Problem("Entity set 'ListaPrzebojowContext.playlistaDb'  is null.");
             }
-            var playlista = await _context.playlistaDb.FindAsync(id);
+            var playlista = await unitOfWork.Playlisty.FindAsync(id);
             if (playlista != null)
             {
-                _context.playlistaDb.Remove(playlista);
+                unitOfWork.Playlisty.Remove(playlista);
             }
             
-            await _context.SaveChangesAsync();
+            await unitOfWork.SaveAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PlaylistaExists(int id)
         {
-          return (_context.playlistaDb?.Any(e => e.PlaylistaID == id)).GetValueOrDefault();
+          return (unitOfWork.Playlisty?.Any(id)).GetValueOrDefault();
         }
     }
 }
