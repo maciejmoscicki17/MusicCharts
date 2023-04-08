@@ -1,0 +1,16 @@
+﻿@using DAL
+@model IEnumerable<Artysta>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Lista Artystów</h1>
+
+<ul>
+    @foreach (var artist in Model)
+    {
+        <li>@Html.ActionLink(artist.Pseudonim, "Songs", new { artistId = artist.ArtystaID })</li>
+    }
+</ul>
+

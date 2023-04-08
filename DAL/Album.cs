@@ -10,7 +10,7 @@ namespace DAL
     public class Album
     {
         [Key]
-       public  int AlbumID { get; set; }
+        public  int AlbumID { get; set; }
         public string Nazwa { get; set; }
         public virtual ICollection<AlbumNaCharcie>? AlbumNaCharcieCol { get; set; }
         public virtual ICollection<ArtystaAlbum>? artystaAlbumCol { get; set; }
