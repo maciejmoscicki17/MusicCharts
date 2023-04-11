@@ -1,0 +1,17 @@
+﻿@using DAL
+@model IEnumerable<Playlista>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Lista Playlist</h1>
+<h2>Kliknij na playlistę, aby zobaczyć piosenki</h2>
+
+<ul>
+    @foreach (var playlist in Model)
+    {
+        <li>@Html.ActionLink(playlist.Nazwa, "Songs", new { playlistaId = playlist.PlaylistaID })</li>
+    }
+</ul>
+

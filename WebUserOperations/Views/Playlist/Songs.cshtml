@@ -1,0 +1,18 @@
+﻿@using DAL;
+@model IEnumerable<Piosenka>
+
+<h1>Piosenki</h1>
+
+@if (Model == null || !Model.Any())
+{
+    <p>Brak piosenek dla tej playlisty.</p>
+}
+else
+{
+    <ul>
+        @foreach (var song in Model)
+        {
+            <li>@song.Nazwa</li>
+        }
+    </ul>
+}

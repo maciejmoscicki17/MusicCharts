@@ -10,6 +10,7 @@
         IChartAlbumowRepository ChartyAlbumow { get; }
         IArtystaAlbumRepository artystaAlbum { get; }
         IPiosenkaArtystaRepository piosenkaArtysta { get; }
+        IPlaylistaPiosenkaRepository playlistaPiosenka { get; }
 
 
 
