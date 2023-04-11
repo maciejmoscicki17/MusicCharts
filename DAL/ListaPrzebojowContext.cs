@@ -231,7 +231,7 @@ namespace ListaPrzebojow.DAL
                 );
 
             modelBuilder.Entity<Playlista>().HasData(
-                new Playlista { PlaylistaID = 1, Nazwa="Vibe" , Gatunek="Rap"},
+                new Playlista { PlaylistaID = 1, Nazwa = "Vibe" , Gatunek="Rap"},
                 new Playlista { PlaylistaID = 2, Nazwa = "Relax", Gatunek = "Rap" },
                 new Playlista { PlaylistaID = 3, Nazwa = "Sunday", Gatunek = "Rap" },
                 new Playlista { PlaylistaID = 4, Nazwa = "Girls Night", Gatunek = "Pop" }

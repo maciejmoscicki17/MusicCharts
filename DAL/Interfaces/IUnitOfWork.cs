@@ -9,6 +9,8 @@
         IChartPiosenekRepository ChartyPiosenek { get; }
         IChartAlbumowRepository ChartyAlbumow { get; }
         IArtystaAlbumRepository artystaAlbum { get; }
+        IPiosenkaArtystaRepository piosenkaArtysta { get; }
+
 
 
         void Save();
