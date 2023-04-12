@@ -1,0 +1,17 @@
+﻿@using DAL
+@model IEnumerable<ChartPiosenek>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Lista chartów piosenek</h1>
+<h2>Kliknij na chart, aby zobaczyć piosenki</h2>
+
+<ul>
+    @foreach (var chart in Model)
+    {
+        <li>@Html.ActionLink(chart.Nazwa, "Songs", new { chartPiosenekId = chart.ChartPiosenekID })</li>
+    }
+</ul>
+

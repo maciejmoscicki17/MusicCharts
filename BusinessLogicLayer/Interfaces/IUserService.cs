@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Interfaces
 {
-    public interface IUserService
+    public interface IUserService 
     {
+        IEnumerable<ChartPiosenek> GetAllChartPiosenek();
         Task<IEnumerable<Piosenka>> GetSongsByArtistId(int artistId);
         Task<IEnumerable<Piosenka>> GetSongsByPlaylistId(int playlistId);
         Task<IEnumerable<Playlista>> GetAllPlaylist();
+        IEnumerable<Piosenka> GetSongsByChartId(int chartId);
     }
 }

@@ -68,5 +68,23 @@ namespace BusinessLogicLayer
         {
             return unitOfWork.Playlisty.GetAll();
         }
+
+        public IEnumerable<ChartPiosenek> GetAllChartPiosenek()
+        {
+            var ChartyPiosenek = unitOfWork.ChartyPiosenek.GetAll();
+            return ChartyPiosenek;
+        }
+
+        public IEnumerable<Piosenka> GetSongsByChartId(int chartId)
+        {
+            List<Piosenka> songs = new List<Piosenka>();
+            var piosenkaNaCharcie = unitOfWork.piosenkaNaCharcie.GetPiosenkiByChartId(chartId);
+            var allSongs = unitOfWork.Piosenki.GetAll();
+            foreach (var pp in piosenkaNaCharcie)
+            {
+                songs.Add(allSongs.First(x => x.PiosenkaID == pp.PiosenkaID));
+            }
+            return songs;
+        }
     }
 }

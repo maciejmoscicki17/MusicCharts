@@ -16,6 +16,7 @@ namespace ListaPrzebojow.DAL
         public IArtystaAlbumRepository artystaAlbum { get; private set; }
         public IPiosenkaArtystaRepository piosenkaArtysta { get; private set; }
         public IPlaylistaPiosenkaRepository playlistaPiosenka { get; private set; }
+        public IPiosenkaNaCharcieRepository piosenkaNaCharcie { get; private set; }
 
 
         public UnitOfWork(ListaPrzebojowContext context)
@@ -30,6 +31,7 @@ namespace ListaPrzebojow.DAL
             artystaAlbum = new ArtystaAlbumRepository(_context);
             piosenkaArtysta = new PiosenkaArtystaRepository(_context);
             playlistaPiosenka = new PlaylistaPiosenkaRepository(_context);
+            piosenkaNaCharcie = new PiosenkaNaCharcieRepository(_context);
         }
 
         public void Save()
