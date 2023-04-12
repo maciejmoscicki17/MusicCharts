@@ -13,6 +13,7 @@ namespace DAL
     {
         [Key]
         public int ChartID { get; set; }
+        public string Nazwa { get; set; }
         public virtual ChartPiosenek chartPiosenek { get; set; }
         public virtual ChartAlbumow chartAlbumow { get; set; }  
     }

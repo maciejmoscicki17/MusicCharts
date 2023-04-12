@@ -14,6 +14,7 @@ namespace DAL
         [Key]
         [ForeignKey("ChartID")]
         public int ChartPiosenekID { get; set; }
+        public string Nazwa { get; set; }
         public ICollection<Piosenka>? piosenki { get; set; }
         public virtual ICollection<PiosenkaNaCharcie>? PiosenkaNaCharcieCol { get; set; }
         public virtual Chart chart { get; set; }

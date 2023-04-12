@@ -31,7 +31,8 @@ namespace DAL.Migrations
                 columns: table => new
                 {
                     ChartID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,7 +57,8 @@ namespace DAL.Migrations
                 name: "ChartAlbumow",
                 columns: table => new
                 {
-                    ChartAlbumowID = table.Column<int>(type: "int", nullable: false)
+                    ChartAlbumowID = table.Column<int>(type: "int", nullable: false),
+                    Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -73,7 +75,8 @@ namespace DAL.Migrations
                 name: "ChartPiosenek",
                 columns: table => new
                 {
-                    ChartPiosenekID = table.Column<int>(type: "int", nullable: false)
+                    ChartPiosenekID = table.Column<int>(type: "int", nullable: false),
+                    Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -161,6 +164,7 @@ namespace DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AlbumID = table.Column<int>(type: "int", nullable: false),
                     IleOdsluchan = table.Column<int>(type: "int", nullable: false),
+                    IleOdsluchanTydzien = table.Column<int>(type: "int", nullable: false),
                     Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Gatunek = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ChartPiosenekID = table.Column<int>(type: "int", nullable: true),
@@ -268,7 +272,8 @@ namespace DAL.Migrations
                     { 1, null, "Her Loss" },
                     { 2, null, "beerbongs & bentleys" },
                     { 3, null, "Queen" },
-                    { 4, null, "Chromatica" }
+                    { 4, null, "Chromatica" },
+                    { 5, null, "thank u, next" }
                 });
 
             migrationBuilder.InsertData(
@@ -282,13 +287,17 @@ namespace DAL.Migrations
                     { 4, "Nicki Minaj", 676543 },
                     { 5, "Lil Wayne", 692834 },
                     { 6, "Lady Gaga", 44355321 },
-                    { 7, "Ariana Grande", 44355321 }
+                    { 7, "Ariana Grande", 78843849 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Chart",
-                column: "ChartID",
-                value: 1);
+                columns: new[] { "ChartID", "Nazwa" },
+                values: new object[,]
+                {
+                    { 1, "top 10 pop" },
+                    { 2, "top" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Playlista",
@@ -309,44 +318,58 @@ namespace DAL.Migrations
                     { 1, 1 },
                     { 2, 3 },
                     { 3, 4 },
-                    { 4, 6 }
+                    { 4, 6 },
+                    { 5, 7 }
                 });
 
             migrationBuilder.InsertData(
                 table: "ChartAlbumow",
-                column: "ChartAlbumowID",
-                value: 1);
+                columns: new[] { "ChartAlbumowID", "Nazwa" },
+                values: new object[,]
+                {
+                    { 1, "top 10 miesiaca" },
+                    { 2, "top pop" }
+                });
 
             migrationBuilder.InsertData(
                 table: "ChartPiosenek",
-                column: "ChartPiosenekID",
-                value: 1);
+                columns: new[] { "ChartPiosenekID", "Nazwa" },
+                values: new object[,]
+                {
+                    { 1, "top 10 miesiaca" },
+                    { 2, "top 10 pop" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Piosenka",
-                columns: new[] { "PiosenkaID", "AlbumID", "ChartPiosenekID", "Gatunek", "IleOdsluchan", "Nazwa", "PlaylistaID" },
+                columns: new[] { "PiosenkaID", "AlbumID", "ChartPiosenekID", "Gatunek", "IleOdsluchan", "IleOdsluchanTydzien", "Nazwa", "PlaylistaID" },
                 values: new object[,]
                 {
-                    { 1, 1, null, "Rap", 430030716, "Rich Flex", null },
-                    { 2, 1, null, "Rap", 128496585, "Major Distribution", null },
-                    { 3, 1, null, "Rap", 128496585, "On BS", null },
-                    { 4, 1, null, "Rap", 76222657, "BackOutsideBoyz", null },
-                    { 5, 1, null, "Rap", 87005583, "Privileged Rappers", null },
-                    { 6, 2, null, "Rap", 87005583, "rockstar", null },
-                    { 7, 2, null, "Rap", 919573559, "Candy Paint", null },
-                    { 8, 2, null, "Rap", 919573559, "Otherside", null },
-                    { 9, 2, null, "Rap", 396452492, "Ball For Me", null },
-                    { 10, 2, null, "Rap", 356452492, "Stay", null },
-                    { 11, 3, null, "Rap", 155198494, "Barbie Dreams", null },
-                    { 12, 3, null, "Rap", 919573559, "Chun-Li", null },
-                    { 13, 3, null, "Rap", 919573559, "Good Form", null },
-                    { 14, 3, null, "Rap", 396452492, "Miami", null },
-                    { 15, 3, null, "Rap", 356452492, "Run & Hide", null },
-                    { 16, 4, null, "Pop", 356453192, "Alice", null },
-                    { 17, 4, null, "Pop", 354553192, "Stupid Love", null },
-                    { 18, 4, null, "Pop", 544553192, "Rain On Me", null },
-                    { 19, 4, null, "Pop", 234553192, "Replay", null },
-                    { 20, 4, null, "Pop", 22153192, "Enigma", null }
+                    { 1, 1, null, "Rap", 430030716, 107507679, "Rich Flex", null },
+                    { 2, 1, null, "Rap", 128496585, 32124146, "Major Distribution", null },
+                    { 3, 1, null, "Rap", 128696575, 32174143, "On BS", null },
+                    { 4, 1, null, "Rap", 762226574, 19055664, "BackOutsideBoyz", null },
+                    { 5, 1, null, "Rap", 87005583, 19055664, "Privileged Rappers", null },
+                    { 6, 2, null, "Rap", 873355833, 218338958, "rockstar", null },
+                    { 7, 2, null, "Rap", 919573559, 229893389, "Candy Paint", null },
+                    { 8, 2, null, "Rap", 944573559, 236143389, "Otherside", null },
+                    { 9, 2, null, "Rap", 396452492, 99113123, "Ball For Me", null },
+                    { 10, 2, null, "Rap", 356452492, 89113123, "Stay", null },
+                    { 11, 3, null, "Rap", 155198494, 38799623, "Barbie Dreams", null },
+                    { 12, 3, null, "Rap", 919573559, 229893389, "Chun-Li", null },
+                    { 13, 3, null, "Rap", 934573559, 233643389, "Good Form", null },
+                    { 14, 3, null, "Rap", 396452492, 99113123, "Miami", null },
+                    { 15, 3, null, "Rap", 356452492, 89113123, "Run & Hide", null },
+                    { 16, 4, null, "Pop", 356893192, 89223298, "Alice", null },
+                    { 17, 4, null, "Pop", 354553192, 88638298, "Stupid Love", null },
+                    { 18, 4, null, "Pop", 544553192, 136138298, "Rain On Me", null },
+                    { 19, 4, null, "Pop", 234553192, 58638298, "Replay", null },
+                    { 20, 4, null, "Pop", 22153192, 5538298, "Enigma", null },
+                    { 21, 5, null, "Pop", 382870556, 95717639, "imagine", null },
+                    { 22, 5, null, "Pop", 330118734, 82529683, "needy", null },
+                    { 23, 5, null, "Pop", 289306849, 72326712, "NASA", null },
+                    { 24, 5, null, "Pop", 260845535, 65211383, "bloodline", null },
+                    { 25, 5, null, "Pop", 205119049, 51279762, "fake smile", null }
                 });
 
             migrationBuilder.InsertData(
@@ -357,7 +380,10 @@ namespace DAL.Migrations
                     { 1, 1 },
                     { 2, 1 },
                     { 3, 1 },
-                    { 4, 1 }
+                    { 4, 1 },
+                    { 4, 2 },
+                    { 5, 1 },
+                    { 5, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -391,7 +417,12 @@ namespace DAL.Migrations
                     { 6, 18 },
                     { 7, 18 },
                     { 6, 19 },
-                    { 6, 20 }
+                    { 6, 20 },
+                    { 7, 21 },
+                    { 7, 22 },
+                    { 7, 23 },
+                    { 7, 24 },
+                    { 7, 25 }
                 });
 
             migrationBuilder.InsertData(
@@ -415,10 +446,25 @@ namespace DAL.Migrations
                     { 1, 14, 0 },
                     { 1, 15, 0 },
                     { 1, 16, 0 },
+                    { 2, 16, 0 },
                     { 1, 17, 0 },
+                    { 2, 17, 0 },
                     { 1, 18, 0 },
+                    { 2, 18, 0 },
                     { 1, 19, 0 },
-                    { 1, 20, 0 }
+                    { 2, 19, 0 },
+                    { 1, 20, 0 },
+                    { 2, 20, 0 },
+                    { 1, 21, 0 },
+                    { 2, 21, 0 },
+                    { 1, 22, 0 },
+                    { 2, 22, 0 },
+                    { 1, 23, 0 },
+                    { 2, 23, 0 },
+                    { 1, 24, 0 },
+                    { 2, 24, 0 },
+                    { 1, 25, 0 },
+                    { 2, 25, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -445,7 +491,9 @@ namespace DAL.Migrations
                     { 15, 4 },
                     { 18, 4 },
                     { 19, 4 },
-                    { 20, 4 }
+                    { 20, 4 },
+                    { 23, 4 },
+                    { 25, 4 }
                 });
 
             migrationBuilder.CreateIndex(

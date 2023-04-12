@@ -14,6 +14,7 @@ namespace DAL
         [ForeignKey("Album")]
         public int AlbumID { get; set; }
         public int IleOdsluchan { get; set; }
+        public int IleOdsluchanTydzien { get; set; }
         public string Nazwa { get; set; }
         public string Gatunek { get; set; }
         public virtual ICollection<PiosenkaNaCharcie>? PiosenkaNaCharcieCol { get; set; }

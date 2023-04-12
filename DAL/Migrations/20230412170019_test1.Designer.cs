@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ListaPrzebojowContext))]
-    [Migration("20230331203517_test1")]
+    [Migration("20230412170019_test1")]
     partial class test1
     {
         /// <inheritdoc />
@@ -66,6 +66,11 @@ namespace DAL.Migrations
                         {
                             AlbumID = 4,
                             Nazwa = "Chromatica"
+                        },
+                        new
+                        {
+                            AlbumID = 5,
+                            Nazwa = "thank u, next"
                         });
                 });
 
@@ -129,7 +134,7 @@ namespace DAL.Migrations
                         {
                             ArtystaID = 7,
                             Pseudonim = "Ariana Grande",
-                            SluchaczeWMiesiacu = 44355321
+                            SluchaczeWMiesiacu = 78843849
                         });
                 });
 
@@ -167,6 +172,11 @@ namespace DAL.Migrations
                         {
                             AlbumID = 4,
                             ArtystaID = 6
+                        },
+                        new
+                        {
+                            AlbumID = 5,
+                            ArtystaID = 7
                         });
                 });
 
@@ -178,6 +188,10 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChartID"));
 
+                    b.Property<string>("Nazwa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ChartID");
 
                     b.ToTable("Chart");
@@ -185,7 +199,13 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            ChartID = 1
+                            ChartID = 1,
+                            Nazwa = "top 10 pop"
+                        },
+                        new
+                        {
+                            ChartID = 2,
+                            Nazwa = "top"
                         });
                 });
 
@@ -194,6 +214,10 @@ namespace DAL.Migrations
                     b.Property<int>("ChartAlbumowID")
                         .HasColumnType("int");
 
+                    b.Property<string>("Nazwa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ChartAlbumowID");
 
                     b.ToTable("ChartAlbumow");
@@ -201,7 +225,13 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            ChartAlbumowID = 1
+                            ChartAlbumowID = 1,
+                            Nazwa = "top 10 miesiaca"
+                        },
+                        new
+                        {
+                            ChartAlbumowID = 2,
+                            Nazwa = "top pop"
                         });
                 });
 
@@ -210,6 +240,10 @@ namespace DAL.Migrations
                     b.Property<int>("ChartPiosenekID")
                         .HasColumnType("int");
 
+                    b.Property<string>("Nazwa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ChartPiosenekID");
 
                     b.ToTable("ChartPiosenek");
@@ -217,7 +251,13 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            ChartPiosenekID = 1
+                            ChartPiosenekID = 1,
+                            Nazwa = "top 10 miesiaca"
+                        },
+                        new
+                        {
+                            ChartPiosenekID = 2,
+                            Nazwa = "top 10 pop"
                         });
                 });
 
@@ -240,6 +280,9 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("IleOdsluchan")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IleOdsluchanTydzien")
                         .HasColumnType("int");
 
                     b.Property<string>("Nazwa")
@@ -266,6 +309,7 @@ namespace DAL.Migrations
                             AlbumID = 1,
                             Gatunek = "Rap",
                             IleOdsluchan = 430030716,
+                            IleOdsluchanTydzien = 107507679,
                             Nazwa = "Rich Flex"
                         },
                         new
@@ -274,6 +318,7 @@ namespace DAL.Migrations
                             AlbumID = 1,
                             Gatunek = "Rap",
                             IleOdsluchan = 128496585,
+                            IleOdsluchanTydzien = 32124146,
                             Nazwa = "Major Distribution"
                         },
                         new
@@ -281,7 +326,8 @@ namespace DAL.Migrations
                             PiosenkaID = 3,
                             AlbumID = 1,
                             Gatunek = "Rap",
-                            IleOdsluchan = 128496585,
+                            IleOdsluchan = 128696575,
+                            IleOdsluchanTydzien = 32174143,
                             Nazwa = "On BS"
                         },
                         new
@@ -289,7 +335,8 @@ namespace DAL.Migrations
                             PiosenkaID = 4,
                             AlbumID = 1,
                             Gatunek = "Rap",
-                            IleOdsluchan = 76222657,
+                            IleOdsluchan = 762226574,
+                            IleOdsluchanTydzien = 19055664,
                             Nazwa = "BackOutsideBoyz"
                         },
                         new
@@ -298,6 +345,7 @@ namespace DAL.Migrations
                             AlbumID = 1,
                             Gatunek = "Rap",
                             IleOdsluchan = 87005583,
+                            IleOdsluchanTydzien = 19055664,
                             Nazwa = "Privileged Rappers"
                         },
                         new
@@ -305,7 +353,8 @@ namespace DAL.Migrations
                             PiosenkaID = 6,
                             AlbumID = 2,
                             Gatunek = "Rap",
-                            IleOdsluchan = 87005583,
+                            IleOdsluchan = 873355833,
+                            IleOdsluchanTydzien = 218338958,
                             Nazwa = "rockstar"
                         },
                         new
@@ -314,6 +363,7 @@ namespace DAL.Migrations
                             AlbumID = 2,
                             Gatunek = "Rap",
                             IleOdsluchan = 919573559,
+                            IleOdsluchanTydzien = 229893389,
                             Nazwa = "Candy Paint"
                         },
                         new
@@ -321,7 +371,8 @@ namespace DAL.Migrations
                             PiosenkaID = 8,
                             AlbumID = 2,
                             Gatunek = "Rap",
-                            IleOdsluchan = 919573559,
+                            IleOdsluchan = 944573559,
+                            IleOdsluchanTydzien = 236143389,
                             Nazwa = "Otherside"
                         },
                         new
@@ -330,6 +381,7 @@ namespace DAL.Migrations
                             AlbumID = 2,
                             Gatunek = "Rap",
                             IleOdsluchan = 396452492,
+                            IleOdsluchanTydzien = 99113123,
                             Nazwa = "Ball For Me"
                         },
                         new
@@ -338,6 +390,7 @@ namespace DAL.Migrations
                             AlbumID = 2,
                             Gatunek = "Rap",
                             IleOdsluchan = 356452492,
+                            IleOdsluchanTydzien = 89113123,
                             Nazwa = "Stay"
                         },
                         new
@@ -346,6 +399,7 @@ namespace DAL.Migrations
                             AlbumID = 3,
                             Gatunek = "Rap",
                             IleOdsluchan = 155198494,
+                            IleOdsluchanTydzien = 38799623,
                             Nazwa = "Barbie Dreams"
                         },
                         new
@@ -354,6 +408,7 @@ namespace DAL.Migrations
                             AlbumID = 3,
                             Gatunek = "Rap",
                             IleOdsluchan = 919573559,
+                            IleOdsluchanTydzien = 229893389,
                             Nazwa = "Chun-Li"
                         },
                         new
@@ -361,7 +416,8 @@ namespace DAL.Migrations
                             PiosenkaID = 13,
                             AlbumID = 3,
                             Gatunek = "Rap",
-                            IleOdsluchan = 919573559,
+                            IleOdsluchan = 934573559,
+                            IleOdsluchanTydzien = 233643389,
                             Nazwa = "Good Form"
                         },
                         new
@@ -370,6 +426,7 @@ namespace DAL.Migrations
                             AlbumID = 3,
                             Gatunek = "Rap",
                             IleOdsluchan = 396452492,
+                            IleOdsluchanTydzien = 99113123,
                             Nazwa = "Miami"
                         },
                         new
@@ -378,6 +435,7 @@ namespace DAL.Migrations
                             AlbumID = 3,
                             Gatunek = "Rap",
                             IleOdsluchan = 356452492,
+                            IleOdsluchanTydzien = 89113123,
                             Nazwa = "Run & Hide"
                         },
                         new
@@ -385,7 +443,8 @@ namespace DAL.Migrations
                             PiosenkaID = 16,
                             AlbumID = 4,
                             Gatunek = "Pop",
-                            IleOdsluchan = 356453192,
+                            IleOdsluchan = 356893192,
+                            IleOdsluchanTydzien = 89223298,
                             Nazwa = "Alice"
                         },
                         new
@@ -394,6 +453,7 @@ namespace DAL.Migrations
                             AlbumID = 4,
                             Gatunek = "Pop",
                             IleOdsluchan = 354553192,
+                            IleOdsluchanTydzien = 88638298,
                             Nazwa = "Stupid Love"
                         },
                         new
@@ -402,6 +462,7 @@ namespace DAL.Migrations
                             AlbumID = 4,
                             Gatunek = "Pop",
                             IleOdsluchan = 544553192,
+                            IleOdsluchanTydzien = 136138298,
                             Nazwa = "Rain On Me"
                         },
                         new
@@ -410,6 +471,7 @@ namespace DAL.Migrations
                             AlbumID = 4,
                             Gatunek = "Pop",
                             IleOdsluchan = 234553192,
+                            IleOdsluchanTydzien = 58638298,
                             Nazwa = "Replay"
                         },
                         new
@@ -418,7 +480,53 @@ namespace DAL.Migrations
                             AlbumID = 4,
                             Gatunek = "Pop",
                             IleOdsluchan = 22153192,
+                            IleOdsluchanTydzien = 5538298,
                             Nazwa = "Enigma"
+                        },
+                        new
+                        {
+                            PiosenkaID = 21,
+                            AlbumID = 5,
+                            Gatunek = "Pop",
+                            IleOdsluchan = 382870556,
+                            IleOdsluchanTydzien = 95717639,
+                            Nazwa = "imagine"
+                        },
+                        new
+                        {
+                            PiosenkaID = 22,
+                            AlbumID = 5,
+                            Gatunek = "Pop",
+                            IleOdsluchan = 330118734,
+                            IleOdsluchanTydzien = 82529683,
+                            Nazwa = "needy"
+                        },
+                        new
+                        {
+                            PiosenkaID = 23,
+                            AlbumID = 5,
+                            Gatunek = "Pop",
+                            IleOdsluchan = 289306849,
+                            IleOdsluchanTydzien = 72326712,
+                            Nazwa = "NASA"
+                        },
+                        new
+                        {
+                            PiosenkaID = 24,
+                            AlbumID = 5,
+                            Gatunek = "Pop",
+                            IleOdsluchan = 260845535,
+                            IleOdsluchanTydzien = 65211383,
+                            Nazwa = "bloodline"
+                        },
+                        new
+                        {
+                            PiosenkaID = 25,
+                            AlbumID = 5,
+                            Gatunek = "Pop",
+                            IleOdsluchan = 205119049,
+                            IleOdsluchanTydzien = 51279762,
+                            Nazwa = "fake smile"
                         });
                 });
 
@@ -571,6 +679,31 @@ namespace DAL.Migrations
                         {
                             PiosenkaID = 20,
                             ArtystaID = 6
+                        },
+                        new
+                        {
+                            PiosenkaID = 21,
+                            ArtystaID = 7
+                        },
+                        new
+                        {
+                            PiosenkaID = 22,
+                            ArtystaID = 7
+                        },
+                        new
+                        {
+                            PiosenkaID = 23,
+                            ArtystaID = 7
+                        },
+                        new
+                        {
+                            PiosenkaID = 24,
+                            ArtystaID = 7
+                        },
+                        new
+                        {
+                            PiosenkaID = 25,
+                            ArtystaID = 7
                         });
                 });
 
@@ -711,6 +844,96 @@ namespace DAL.Migrations
                             PiosenkaID = 20,
                             ChartPiosenekID = 1,
                             PozycjaPiosenki = 0
+                        },
+                        new
+                        {
+                            PiosenkaID = 21,
+                            ChartPiosenekID = 1,
+                            PozycjaPiosenki = 0
+                        },
+                        new
+                        {
+                            PiosenkaID = 22,
+                            ChartPiosenekID = 1,
+                            PozycjaPiosenki = 0
+                        },
+                        new
+                        {
+                            PiosenkaID = 23,
+                            ChartPiosenekID = 1,
+                            PozycjaPiosenki = 0
+                        },
+                        new
+                        {
+                            PiosenkaID = 24,
+                            ChartPiosenekID = 1,
+                            PozycjaPiosenki = 0
+                        },
+                        new
+                        {
+                            PiosenkaID = 25,
+                            ChartPiosenekID = 1,
+                            PozycjaPiosenki = 0
+                        },
+                        new
+                        {
+                            PiosenkaID = 16,
+                            ChartPiosenekID = 2,
+                            PozycjaPiosenki = 0
+                        },
+                        new
+                        {
+                            PiosenkaID = 17,
+                            ChartPiosenekID = 2,
+                            PozycjaPiosenki = 0
+                        },
+                        new
+                        {
+                            PiosenkaID = 18,
+                            ChartPiosenekID = 2,
+                            PozycjaPiosenki = 0
+                        },
+                        new
+                        {
+                            PiosenkaID = 19,
+                            ChartPiosenekID = 2,
+                            PozycjaPiosenki = 0
+                        },
+                        new
+                        {
+                            PiosenkaID = 20,
+                            ChartPiosenekID = 2,
+                            PozycjaPiosenki = 0
+                        },
+                        new
+                        {
+                            PiosenkaID = 21,
+                            ChartPiosenekID = 2,
+                            PozycjaPiosenki = 0
+                        },
+                        new
+                        {
+                            PiosenkaID = 22,
+                            ChartPiosenekID = 2,
+                            PozycjaPiosenki = 0
+                        },
+                        new
+                        {
+                            PiosenkaID = 23,
+                            ChartPiosenekID = 2,
+                            PozycjaPiosenki = 0
+                        },
+                        new
+                        {
+                            PiosenkaID = 24,
+                            ChartPiosenekID = 2,
+                            PozycjaPiosenki = 0
+                        },
+                        new
+                        {
+                            PiosenkaID = 25,
+                            ChartPiosenekID = 2,
+                            PozycjaPiosenki = 0
                         });
                 });
 
@@ -795,6 +1018,21 @@ namespace DAL.Migrations
                         {
                             AlbumID = 4,
                             ChartAlbumowID = 1
+                        },
+                        new
+                        {
+                            AlbumID = 5,
+                            ChartAlbumowID = 1
+                        },
+                        new
+                        {
+                            AlbumID = 4,
+                            ChartAlbumowID = 2
+                        },
+                        new
+                        {
+                            AlbumID = 5,
+                            ChartAlbumowID = 2
                         });
                 });
 
@@ -911,6 +1149,16 @@ namespace DAL.Migrations
                         new
                         {
                             PiosenkaID = 14,
+                            PlaylistaID = 4
+                        },
+                        new
+                        {
+                            PiosenkaID = 23,
+                            PlaylistaID = 4
+                        },
+                        new
+                        {
+                            PiosenkaID = 25,
                             PlaylistaID = 4
                         });
                 });
