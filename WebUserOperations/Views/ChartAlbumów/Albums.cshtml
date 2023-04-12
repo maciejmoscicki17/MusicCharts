@@ -1,0 +1,18 @@
+﻿@using DAL;
+@model IEnumerable<Album>
+
+<h1>Albumy</h1>
+
+@if (Model == null || !Model.Any())
+{
+    <p>Brak albumów dla tego chartu.</p>
+}
+else
+{
+    <ul>
+        @foreach (var album in Model)
+        {
+            <li>@album.Nazwa</li>
+        }
+    </ul>
+}

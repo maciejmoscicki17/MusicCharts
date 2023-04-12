@@ -12,6 +12,7 @@
         IPiosenkaArtystaRepository piosenkaArtysta { get; }
         IPlaylistaPiosenkaRepository playlistaPiosenka { get; }
         IPiosenkaNaCharcieRepository piosenkaNaCharcie { get; } 
+        IAlbumNaCharcieRepository albumNaCharcie { get; }
 
 
 

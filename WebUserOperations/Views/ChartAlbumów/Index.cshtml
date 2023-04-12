@@ -1,0 +1,17 @@
+﻿@using DAL
+@model IEnumerable<ChartAlbumow>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Lista chartów albumow</h1>
+<h2>Kliknij na chart, aby zobaczyć albumy</h2>
+
+<ul>
+    @foreach (var chart in Model)
+    {
+            <li>@Html.ActionLink(chart.Nazwa, "Albums", new { chartAlbumowId = chart.ChartAlbumowID })</li>
+    }
+</ul>
+
