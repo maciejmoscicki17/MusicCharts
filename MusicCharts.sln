@@ -7,9 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebListaPrzebojow", "WebListaPrzebojow\WebListaPrzebojow.csproj", "{23AA30EC-A667-48EE-8B29-402813388080}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicLayer", "BusinessLogicLayer\BusinessLogicLayer.csproj", "{89DEC198-8FEF-4D84-A96F-AE56095EA2AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogicLayer", "BusinessLogicLayer\BusinessLogicLayer.csproj", "{89DEC198-8FEF-4D84-A96F-AE56095EA2AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUserOperations", "WebUserOperations\WebUserOperations.csproj", "{1E230CBD-9036-408B-8C6B-77DA4F3A13E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUserOperations", "WebUserOperations\WebUserOperations.csproj", "{1E230CBD-9036-408B-8C6B-77DA4F3A13E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjectBLL", "TestProjectBLL\TestProjectBLL.csproj", "{6BEA025F-AEF6-4073-9826-B2BC1021CDB1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{49A054D9-EA0D-477A-B9B3-480EC8F4E411} = {49A054D9-EA0D-477A-B9B3-480EC8F4E411}
+		{89DEC198-8FEF-4D84-A96F-AE56095EA2AD} = {89DEC198-8FEF-4D84-A96F-AE56095EA2AD}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +39,10 @@ Global
 		{1E230CBD-9036-408B-8C6B-77DA4F3A13E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E230CBD-9036-408B-8C6B-77DA4F3A13E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E230CBD-9036-408B-8C6B-77DA4F3A13E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BEA025F-AEF6-4073-9826-B2BC1021CDB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BEA025F-AEF6-4073-9826-B2BC1021CDB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BEA025F-AEF6-4073-9826-B2BC1021CDB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BEA025F-AEF6-4073-9826-B2BC1021CDB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

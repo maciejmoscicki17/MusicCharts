@@ -18,7 +18,7 @@ namespace WebUserOperations.Controllers
         }
         public async Task<IActionResult>Songs(int chartPiosenekId)
         {
-            var songs = await userService.GetSongsByPlaylistId(chartPiosenekId);
+            var songs = userService.GetSongsByChartId(chartPiosenekId);
             return View(songs);
         }
     }

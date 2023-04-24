@@ -1,6 +1,7 @@
 ﻿using BusinessLogicLayer.Interfaces;
 using DAL;
 using DAL.Interfaces;
+using System.Xml.Serialization;
 
 namespace BusinessLogicLayer
 {
@@ -16,17 +17,11 @@ namespace BusinessLogicLayer
             var artist = await unitOfWork.Artyści.FindAsync(artistId);
             var artystaAlbum = unitOfWork.artystaAlbum.GetAll().Where(a => a.ArtystaID == artistId);
 
-            //if (!artystaAlbum.Any()) return null;
-
             List<Album> albums = new List<Album>();
             foreach(var aa in artystaAlbum) 
             {
                 albums.Add(unitOfWork.Albums.GetById(aa.AlbumID));
             }
-            //List<Piosenka> songs = albums
-            //    .Where(album => album.piosenkaCol is not null)
-            //    .SelectMany(album => album.piosenkaCol)
-            //    .ToList();
 
             var allSongs = unitOfWork.Piosenki.GetAll();
             List<Piosenka> songs = new List<Piosenka>();
@@ -80,6 +75,7 @@ namespace BusinessLogicLayer
             List<Piosenka> songs = new List<Piosenka>();
             var piosenkaNaCharcie = unitOfWork.piosenkaNaCharcie.GetPiosenkiByChartId(chartId);
             var allSongs = unitOfWork.Piosenki.GetAll();
+            if (!allSongs.Any()) return allSongs;
             foreach (var pp in piosenkaNaCharcie)
             {
                 songs.Add(allSongs.First(x => x.PiosenkaID == pp.PiosenkaID));
@@ -98,6 +94,7 @@ namespace BusinessLogicLayer
             List<Album> albums = new List<Album>();
             var albumyNaCharcie = unitOfWork.albumNaCharcie.GetByAlbumId(chartId);
             var allAlbums = unitOfWork.Albums.GetAll();
+            if (!allAlbums.Any()) return allAlbums;
             foreach(var album in albumyNaCharcie)
             {
                 albums.Add(allAlbums.First(a => a.AlbumID == album.AlbumID));
