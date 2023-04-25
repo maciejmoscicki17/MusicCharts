@@ -26,6 +26,10 @@ namespace ListaPrzebojow.DAL
         {
 
         }
+        public ListaPrzebojowContext(DbContextOptions options) : base(options)
+        {
+
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

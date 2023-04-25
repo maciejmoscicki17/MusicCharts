@@ -1,5 +1,7 @@
 using BusinessLogicLayer;
+using DAL.Interfaces;
 using ListaPrzebojow.DAL;
+using Moq;
 
 namespace TestProjectBLL
 {
@@ -54,6 +56,28 @@ namespace TestProjectBLL
             var userService = new UserService(unitOfWork);
 
             Assert.Empty(userService.GetSongsByChartId(1));
+        }
+
+        [Fact]
+        public void TestIleAlbumowMoq()
+        {
+            Mock<IAlbumRepository> mockAlbumRepository = new Mock<IAlbumRepository>();
+            mockAlbumRepository.Setup(x => x.GetAll()).Returns(new List<Album> { new Album(), new Album() });
+            var context = new ListaPrzebojowContext();
+            var unitOfWork = new TestUnitOfWork(context, albumRepository: mockAlbumRepository.Object);
+            var albumBLL = new AlbumBLL(unitOfWork);
+
+            Assert.Equal(2, albumBLL.IleAlbumow());
+        }
+
+        [Fact]
+        public void TestDodajLosowe()
+        {
+            Mock<IAlbumRepository> mockAlbumRepository = new Mock<IAlbumRepository>();
+            var context = new ListaPrzebojowContext();
+            var unitOfWork = new TestUnitOfWork(context, albumRepository: mockAlbumRepository.Object);
+            var albumBLL = new AlbumBLL(unitOfWork);
+            albumBLL.DodajLosoweAlbumy(4);
         }
 
 
