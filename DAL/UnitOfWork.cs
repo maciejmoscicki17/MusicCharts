@@ -20,15 +20,15 @@ namespace ListaPrzebojow.DAL
         public IAlbumNaCharcieRepository albumNaCharcie { get; private set; }
 
 
-        public UnitOfWork(ListaPrzebojowContext context)
+        public UnitOfWork(ListaPrzebojowContext context, IChartPiosenekRepository? chartPiosenek = null, IAlbumRepository? albumRepository = null, IPiosenkaRepository? piosenkaRepository = null)
         {
             _context = context;
-            Albums = new AlbumRepository(_context);
-            Piosenki = new PiosenkaRepository(_context);
+            Albums = albumRepository ?? new AlbumRepository(_context);
+            Piosenki = piosenkaRepository ?? new PiosenkaRepository(_context);
             Artyści = new ArtystaRepository(_context);
             Playlisty = new PlaylistaRepository(_context);
             ChartyAlbumow = new ChartAlbumowRepository(_context);
-            ChartyPiosenek = new ChartPiosenekRepository(_context);
+            ChartyPiosenek = chartPiosenek ?? new ChartPiosenekRepository(_context);
             artystaAlbum = new ArtystaAlbumRepository(_context);
             piosenkaArtysta = new PiosenkaArtystaRepository(_context);
             playlistaPiosenka = new PlaylistaPiosenkaRepository(_context);
