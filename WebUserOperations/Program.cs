@@ -2,11 +2,14 @@ using BusinessLogicLayer;
 using BusinessLogicLayer.Interfaces;
 using DAL.Interfaces;
 using ListaPrzebojow.DAL;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
 builder.Services.AddDbContext<ListaPrzebojowContext>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
