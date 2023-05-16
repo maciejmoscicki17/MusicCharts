@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TestProjectBLL
 {
-    internal class PiosenkaRepositoryFake : IPiosenkaRepository
+    public class PiosenkaRepositoryFake : IPiosenkaRepository
     {
         private List<Piosenka> piosenki = new List<Piosenka>();
         public void Add(Piosenka piosenka)

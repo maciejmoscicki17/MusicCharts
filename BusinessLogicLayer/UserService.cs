@@ -52,9 +52,12 @@ namespace BusinessLogicLayer
             List<Piosenka> songs = new List<Piosenka>();
             var playlistaPiosenka = unitOfWork.playlistaPiosenka.GetAllByPlaylistaId(playlistId);
             var allSongs = unitOfWork.Piosenki.GetAll();
-            foreach( var pp in playlistaPiosenka)
+            if(allSongs.Count() != 0)
             {
-                songs.Add(allSongs.First(x => x.PiosenkaID == pp.PiosenkaID));
+                foreach( var pp in playlistaPiosenka)
+                {
+                    songs.Add(allSongs.First(x => x.PiosenkaID == pp.PiosenkaID));
+                }
             }
             return songs;
         }
